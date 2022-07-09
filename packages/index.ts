@@ -2,17 +2,17 @@ import { App } from "vue";
 import NePanel from "./NePanel";
 
 const components = [
-    NePanel
-]
+  NePanel
+];
 
 const install = (app: App): void => {
-    components.map(component => app.component(component.name, component));
-}
+  components.map(component => app.component(component.name, component));
+};
 
 export {
-    NePanel
-}
+  NePanel
+};
 
 export default {
-    install
-}
+  install
+};

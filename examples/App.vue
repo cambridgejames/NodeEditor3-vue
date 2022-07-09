@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import { defineComponent } from "vue";
 
 import BasicUsage from "./views/BasicUsage.vue";
 
