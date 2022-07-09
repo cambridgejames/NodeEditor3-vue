@@ -1,16 +1,26 @@
 {
   "name": "vue-node-editor3",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "description": "基于Vue3.x的节点编辑器",
+  "main": "lib/index.main.js",
+  "typings": "lib/index.d.ts",
+  "keywords": [
+    "node editor"
+  ],
+  "author": {
+    "name": "Cambridge James",
+    "email": "cambridge_james@foxmail.com"
+  },
+  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "build:lib": "vue-cli-service build --target lib --name index --dest lib ./packages/index.ts"
   },
   "dependencies": {
     "core-js": "^3.8.3",
-    "vue": "^3.2.13",
-    "vue-class-component": "^8.0.0-0",
-    "vue-router": "^4.0.3"
+    "vue": "^3.2.13"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",
