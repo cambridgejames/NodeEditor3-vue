@@ -20,7 +20,7 @@ npm install vue-node-editor3 --save
 
 ```$xslt
 # 安装依赖包
-npm install
+npm install --legacy-peer-deps
 
 # 运行示例
 npm run serve
@@ -31,6 +31,10 @@ npm run build
 # 清理构建文件
 npm run build:clean
 ```
+
+**注意！**
+
+由于ESlint存在大量的依赖冲突问题，安装依赖包时请加入`--legacy-peer-deps`参数以忽略依赖冲突
 
 ## 版权说明
 
