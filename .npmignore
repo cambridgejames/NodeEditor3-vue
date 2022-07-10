@@ -1,19 +1,23 @@
 # 忽略目录
 .idea
 .vscode
+examples/
 build/
 docs/
-examples/
+imgs/
+node_modules/
 packages/
 public/
-node_modules/
 typings/
 
 # 忽略指定文件
+.editorconfig
+.eslintrc.js
+.gitignore
+.browserslistrc
 babel.config.js
 tsconfig.json
 tslint.json
 vue.config.js
-.gitignore
-.browserslistrc
+
 *.map
