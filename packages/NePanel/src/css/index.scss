@@ -1,0 +1,28 @@
+@import "../../../css/index.scss";
+
+.ne-panel {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.ne-svg-panel {
+  width: 100%;
+  height: 100%;
+
+  .grid-defs {
+    path {
+      fill: none;
+      stroke: $grid-stroke-color;
+      stroke-opacity: 0.4;
+    }
+  }
+
+  .grid-group {
+    .coordinate-axis {
+      stroke: $grid-stroke-color;
+      stroke-opacity: 0.4;
+    }
+  }
+}
