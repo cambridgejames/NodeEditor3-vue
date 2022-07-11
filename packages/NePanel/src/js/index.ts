@@ -4,7 +4,7 @@ import Format from "./format";
 
 export default defineComponent({
   name: "ne-panel",
-  setup() {
+  setup: function () {
     onMounted(() => {
       reCalcPanelSize();
       reCalcGrid();
@@ -52,7 +52,7 @@ export default defineComponent({
         nePanelConf.value.y = -newWidth.offsetHeight / 2;
         nePanelConf.value.width = newWidth.offsetWidth;
         nePanelConf.value.height = newWidth.offsetHeight;
-      }).then();
+      });
     };
 
     /**
@@ -61,7 +61,7 @@ export default defineComponent({
     const reCalcGrid = (): void => {
       nextTick((): void => {
         nePanelConf.value.def = Format.formatGrid(nePanelConf.value.scale.value);
-      }).then();
+      });
     };
 
     /**

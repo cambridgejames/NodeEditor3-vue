@@ -1,14 +1,12 @@
 "use strict";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
-import path from "path";
 import { terser } from "rollup-plugin-terser";
+import path from "path";
 import typescript from "rollup-plugin-typescript2";
-import pkg from "../package.json";
-
 import scss from "rollup-plugin-scss";
+import vue from "rollup-plugin-vue";
 
-const deps = Object.keys(pkg.dependencies);
-const vue = require("rollup-plugin-vue");
+import pkg from "../package.json";
 
 export default [
   {
@@ -24,7 +22,7 @@ export default [
       nodeResolve(),
       vue({
         target: "browser",
-        css: false,
+        preprocessStyles: true,
         exposeFilename: false
       }),
       typescript({
@@ -44,11 +42,18 @@ export default [
         abortOnError: false
       }),
       scss({
-        output: false
+        include: [
+          "packages/**/*.css",
+          "packages/**/*.scss",
+          "packages/**/*.sass"
+        ],
+        output: "./lib/bundle.css",
+        outputStyle: "compressed",
+        failOnError: true
       })
     ],
-    external(id) {
-      return /^vue/.test(id) || deps.some(k => new RegExp("^" + k).test(id));
-    }
+    external: [
+      "vue"
+    ]
   }
 ];
