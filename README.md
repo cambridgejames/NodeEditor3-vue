@@ -2,12 +2,30 @@
 
 ![](./imgs/ne-panel.png)
 
-## 安装
+## 安装和使用
+
+### npm安装
 
 ```$xslt
 # 执行以下命令在当前项目中安装vue-node-editor3
 npm install vue-node-editor3 --save
 ```
+
+### 引入NodeEditor
+
+#### 完整引入
+
+```typescript
+import { createApp } from 'vue'
+import App from './App.vue'
+
+import NeEditor from "vue-node-editor3";
+import "vue-node-editor3/lib/bundle.min.css";
+
+createApp(App).use(NeEditor).mount('#app')
+```
+
+以上代码便完成了NodeEditor的引入。需要注意的是，样式文件需要单独引入。
 
 ## 构建
 
