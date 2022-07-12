@@ -1,7 +1,8 @@
 <template>
   <div ref="nePanel" class="ne-panel" v-resize="reCalcPanelSize">
     <svg ref="neSvgPanel" class="ne-svg-panel" :width="nePanelConf.width" :height="nePanelConf.height"
-       :viewBox="`${formatScale(nePanelConf.x)} ${formatScale(nePanelConf.y)} ${formatScale(nePanelConf.width)} ${formatScale(nePanelConf.height)}`">
+         :viewBox="`${formatScale(nePanelConf.x)} ${formatScale(nePanelConf.y)} ${formatScale(nePanelConf.width)} ${formatScale(nePanelConf.height)}`"
+         @mousemove="MouseEventProcessor.onMouseMove">
       <!--网格和坐标系-->
       <g ref="grid-group" class="grid-group">
         <defs ref="grid-defs" class="grid-defs">
@@ -21,6 +22,11 @@
               :stroke-width="formatScale(1)" class="coordinate-axis"/>
       </g>
     </svg>
+    <div ref="ne-panel-info" :class="{'ne-panel-info':true, 'show':panelInfo.show}">
+      <p>缩放：{{ Math.ceil(nePanelConf.scale.value * 100) }}%</p>
+      <p>坐标：({{ panelInfo.mouse.realX.toFixed(1) }}, {{ panelInfo.mouse.realY.toFixed(1) }})</p>
+      <p>大小：{{ formatScale(nePanelConf.width).toFixed(0) }} * {{ formatScale(nePanelConf.height).toFixed(0) }}</p>
+    </div>
   </div>
 </template>
 

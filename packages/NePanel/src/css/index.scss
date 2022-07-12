@@ -5,24 +5,44 @@
   height: 100%;
   overflow: hidden;
   position: relative;
-}
 
-.ne-svg-panel {
-  width: 100%;
-  height: 100%;
+  .ne-svg-panel {
+    width: 100%;
+    height: 100%;
 
-  .grid-defs {
-    path {
-      fill: none;
-      stroke: $grid-stroke-color;
-      stroke-opacity: 0.4;
+    .grid-defs {
+      path {
+        fill: none;
+        stroke: $grid-stroke-color;
+        stroke-opacity: 0.4;
+      }
+    }
+
+    .grid-group {
+      .coordinate-axis {
+        stroke: $grid-stroke-color;
+        stroke-opacity: 0.4;
+      }
     }
   }
 
-  .grid-group {
-    .coordinate-axis {
-      stroke: $grid-stroke-color;
-      stroke-opacity: 0.4;
+  .ne-panel-info {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    padding: 10px;
+    color: #fff;
+    font-size: 12px;
+    background-color: $tips-background;
+    opacity: 0;
+    transition: all .3s ease-in-out;
+
+    &[class*=show] {
+      opacity: 1;
     }
   }
 }

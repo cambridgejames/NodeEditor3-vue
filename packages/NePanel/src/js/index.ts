@@ -1,7 +1,9 @@
-import { defineComponent, onMounted, ref } from "vue";
-
 import Format from "./format";
 import { getBrowser } from "@/js/browser";
+import { getMouseEventProcessor } from "@/NePanel/src/js/event/mouseEventProcessor";
+import { getPanelInfoController } from "@/NePanel/src/js/controller/panelInfoController";
+
+import { defineComponent, onMounted, ref } from "vue";
 
 export default defineComponent({
   name: "ne-panel",
@@ -48,6 +50,16 @@ export default defineComponent({
         speed: 0.1
       }
     });
+    const panelInfo = ref({
+      ready: false,
+      show: false,
+      delay: 1000,
+      timer: -1,
+      mouse: {
+        realX: 0,
+        realY: 0
+      }
+    });
 
     /*********************
      *  Local Functions  *
@@ -90,6 +102,7 @@ export default defineComponent({
       nePanelConf.value.y -= (nePanelElement.offsetHeight - nePanelConf.value.height) / 2;
       nePanelConf.value.width = nePanelElement.offsetWidth;
       nePanelConf.value.height = nePanelElement.offsetHeight;
+      PanelInfoController.showPanelInfo();
     };
 
     /**
@@ -109,12 +122,21 @@ export default defineComponent({
       return Format.formatScale(number, nePanelConf.value.scale.value);
     };
 
+    /************************
+     *  Imported Functions  *
+     ************************/
+
+    const PanelInfoController = getPanelInfoController(panelInfo);
+    const MouseEventProcessor = getMouseEventProcessor(nePanelConf, panelInfo);
+
     return {
       nePanel,
       nePanelConf,
+      panelInfo,
       isInitialState,
       reCalcPanelSize,
-      formatScale
+      formatScale,
+      MouseEventProcessor
     };
   }
 });

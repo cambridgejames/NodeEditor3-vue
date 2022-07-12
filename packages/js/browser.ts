@@ -12,7 +12,7 @@ export enum BROWSER {
 /**
  * 浏览器内核类型
  */
-export enum ENGINE {
+export enum KERNEL {
   TRIDENT = "TRIDENT",
   WEBKIT = "WEBKIT",
   GECKO = "GECKO",
@@ -33,11 +33,11 @@ const BROWSER_REG_MAP: {[key in BROWSER]: RegExp} = {
 /**
  * 用于浏览器内核类型匹配的正则表达式
  */
-const ENGINE_REG_MAP: {[key in ENGINE]: RegExp} = {
-  [ENGINE.TRIDENT]: /\b(?:msie |ie |trident\/\d.*rv[ :])([\d.]+)/,
-  [ENGINE.WEBKIT]: /\bapplewebkit\/?([\d.+]+)/,
-  [ENGINE.GECKO]: /\bgecko\/(\d+)/,
-  [ENGINE.PRESTO]: /\bpresto\/([\d.]+)/
+const KERNEL_REG_MAP: {[key in KERNEL]: RegExp} = {
+  [KERNEL.TRIDENT]: /\b(?:msie |ie |trident\/\d.*rv[ :])([\d.]+)/,
+  [KERNEL.WEBKIT]: /\bapplewebkit\/?([\d.+]+)/,
+  [KERNEL.GECKO]: /\bgecko\/(\d+)/,
+  [KERNEL.PRESTO]: /\bpresto\/([\d.]+)/
 };
 
 const DEFAULT_RESULT = "UNKNOWN";
@@ -59,11 +59,24 @@ const detect = (client: {[key: string]: RegExp}, userAgent: string): string => {
 };
 
 /**
+ * 带默认值的匹配方法
+ *
+ * @param client 待匹配的类型
+ * @param userAgent 用户代理
+ * @param defaultValue 默认值
+ * @return 匹配结果
+ */
+const detectWithDefault = (client: {[key: string]: RegExp}, userAgent: string, defaultValue: string = DEFAULT_RESULT): string => {
+  const result = detect(client, userAgent);
+  return result === DEFAULT_RESULT ? defaultValue : result;
+};
+
+/**
  * 浏览器及内核类型类
  */
 export interface BrowserType {
   browser: string // 浏览器类型
-  engine: string // 浏览器内核类型
+  kernel: string // 浏览器内核类型
 }
 
 /**
@@ -74,7 +87,7 @@ export interface BrowserType {
 export const getBrowser = (): BrowserType => {
   const userAgent = navigator.userAgent.toLowerCase();
   return {
-    browser: detect(BROWSER_REG_MAP, userAgent),
-    engine: detect(ENGINE_REG_MAP, userAgent)
+    browser: detectWithDefault(BROWSER_REG_MAP, userAgent, BROWSER.CHROME),
+    kernel: detectWithDefault(KERNEL_REG_MAP, userAgent, KERNEL.WEBKIT)
   };
 };
