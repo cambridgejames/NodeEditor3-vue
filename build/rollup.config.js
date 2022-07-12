@@ -47,7 +47,7 @@ export default [
           "packages/**/*.scss",
           "packages/**/*.sass"
         ],
-        output: "./lib/bundle.css",
+        output: "./lib/bundle.min.css",
         outputStyle: "compressed",
         failOnError: true
       })

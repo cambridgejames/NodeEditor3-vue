@@ -18,6 +18,7 @@ module.exports = {
   },
   rules: {
     "@typescript-eslint/no-inferrable-types": "off",
+    "@typescript-eslint/ban-types": "off",
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     indent: ["error", 2],
@@ -26,6 +27,7 @@ module.exports = {
     "quote-props": ["error", "as-needed"],
     semi: ["error", "always"],
     "no-empty": "error",
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "operator-linebreak": ["error", "before"]
   }
 };
