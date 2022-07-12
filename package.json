@@ -1,6 +1,6 @@
 {
   "name": "vue-node-editor3",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": false,
   "description": "基于Vue3.x的节点编辑器",
   "main": "lib/index.main.js",
