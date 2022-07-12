@@ -1,17 +1,29 @@
-import { defineComponent, nextTick, onMounted, onUnmounted, ref } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 
 import Format from "./format";
 
 export default defineComponent({
   name: "ne-panel",
-  setup: function () {
+  directives: {
+    resize: {
+      mounted(el, bindings) {
+        const debounce = (callback: Function): ResizeObserverCallback => {
+          return () => {
+            callback.apply(this, []);
+          };
+        };
+        el._resizer = new window.ResizeObserver(debounce(bindings.value));
+        el._resizer.observe(el);
+      },
+      unmounted(el) {
+        el._resizer.disconnect();
+      }
+    }
+  },
+  setup: () => {
     onMounted(() => {
-      reCalcPanelSize();
+      initPanelSize();
       reCalcGrid();
-      window.addEventListener("resize", reCalcPanelSize); // TODO: 提供resize方法让用户自己刷新size
-    });
-    onUnmounted(() => {
-      window.removeEventListener("resize", reCalcPanelSize);
     });
 
     /**
@@ -23,7 +35,7 @@ export default defineComponent({
       y: -100,
       width: 200,
       height: 200,
-      def: {
+      gridDef: {
         largeGridSize: 0,
         smallGridSize: 0
       },
@@ -40,28 +52,49 @@ export default defineComponent({
      *********************/
 
     /**
+     * 初始化主面板和Svg画布尺寸
+     */
+    const initPanelSize = () : void => {
+      const nePanelElement = nePanel.value;
+      if (nePanelElement === undefined) {
+        return;
+      }
+      nePanelConf.value.x = nePanelElement.offsetWidth / -2;
+      nePanelConf.value.y = nePanelElement.offsetHeight / -2;
+      nePanelConf.value.width = nePanelElement.offsetWidth;
+      nePanelConf.value.height = nePanelElement.offsetHeight;
+    };
+
+    /**
+     * 判断视图是否处于初始状态
+     *
+     * @returns {Boolean} 视图是否处于初始状态
+     */
+    const isInitialState = (): boolean => {
+      return nePanelConf.value.scale.value === 1
+        && nePanelConf.value.x === nePanelConf.value.width / -2
+        && nePanelConf.value.y === nePanelConf.value.height / -2;
+    };
+
+    /**
      * 重新计算主面板和Svg画布尺寸
      */
     const reCalcPanelSize = (): void => {
-      nextTick((): void => {
-        const newWidth = nePanel.value;
-        if (newWidth === undefined) {
-          return;
-        }
-        nePanelConf.value.x = -newWidth.offsetWidth / 2;
-        nePanelConf.value.y = -newWidth.offsetHeight / 2;
-        nePanelConf.value.width = newWidth.offsetWidth;
-        nePanelConf.value.height = newWidth.offsetHeight;
-      });
+      const nePanelElement = nePanel.value;
+      if (nePanelElement === undefined) {
+        return;
+      }
+      nePanelConf.value.x -= (nePanelElement.offsetWidth - nePanelConf.value.width) / 2;
+      nePanelConf.value.y -= (nePanelElement.offsetHeight - nePanelConf.value.height) / 2;
+      nePanelConf.value.width = nePanelElement.offsetWidth;
+      nePanelConf.value.height = nePanelElement.offsetHeight;
     };
 
     /**
      * 重新计算网格参数
      */
     const reCalcGrid = (): void => {
-      nextTick((): void => {
-        nePanelConf.value.def = Format.formatGrid(nePanelConf.value.scale.value);
-      });
+      nePanelConf.value.gridDef = Format.formatGrid(nePanelConf.value.scale.value);
     };
 
     /**
@@ -77,6 +110,8 @@ export default defineComponent({
     return {
       nePanel,
       nePanelConf,
+      isInitialState,
+      reCalcPanelSize,
       formatScale
     };
   }
