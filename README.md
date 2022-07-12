@@ -6,12 +6,12 @@
 
 ### npm安装
 
-```$xslt
-# 执行以下命令在当前项目中安装vue-node-editor3
+```shell
+# 执行以下命令在当前项目中安装NodeEditor3
 npm install vue-node-editor3 --save
 ```
 
-### 引入NodeEditor
+### 引入NodeEditor3
 
 #### 完整引入
 
@@ -19,10 +19,10 @@ npm install vue-node-editor3 --save
 import { createApp } from 'vue'
 import App from './App.vue'
 
-import NeEditor from "vue-node-editor3";
+import NodeEditor from "vue-node-editor3";
 import "vue-node-editor3/lib/bundle.min.css";
 
-createApp(App).use(NeEditor).mount('#app')
+createApp(App).use(NodeEditor).mount('#app')
 ```
 
 以上代码便完成了NodeEditor的引入。需要注意的是，样式文件需要单独引入。
@@ -36,7 +36,7 @@ createApp(App).use(NeEditor).mount('#app')
 
 ### 构建步骤
 
-```$xslt
+```shell
 # 安装依赖包
 npm install --legacy-peer-deps
 
