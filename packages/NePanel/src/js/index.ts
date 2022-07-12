@@ -1,6 +1,7 @@
 import { defineComponent, onMounted, ref } from "vue";
 
 import Format from "./format";
+import { getBrowser } from "@/js/browser";
 
 export default defineComponent({
   name: "ne-panel",
@@ -22,6 +23,7 @@ export default defineComponent({
   },
   setup: () => {
     onMounted(() => {
+      console.log(getBrowser());
       initPanelSize();
       reCalcGrid();
     });
