@@ -2,11 +2,26 @@ import Format from "./format";
 import { getBrowser } from "@/js/browser";
 import { getMouseEventProcessor } from "@/NePanel/src/js/event/mouseEventProcessor";
 import { getPanelInfoController } from "@/NePanel/src/js/controller/panelInfoController";
+import { NePanelInitIntf } from "@/js/interface/neNodeIntf";
 
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, PropType, ref } from "vue";
+
+import NeInputNode from "../../../nodes/input/NeInputNode";
+
+import COMPONENTS from "@/nodes";
 
 export default defineComponent({
   name: "ne-panel",
+  components: {
+    NeInputNode
+  },
+  props: {
+    init: {
+      type: Array as PropType<NePanelInitIntf[]>,
+      required: false,
+      default: [] as NePanelInitIntf[]
+    }
+  },
   directives: {
     resize: {
       mounted(el, bindings) {
@@ -23,7 +38,7 @@ export default defineComponent({
       }
     }
   },
-  setup: () => {
+  setup: (propsData) => {
     onMounted(() => {
       console.log(getBrowser());
       initPanelSize();
@@ -60,6 +75,7 @@ export default defineComponent({
         realY: 0
       }
     });
+    const components = ref<NePanelInitIntf[]>(propsData.init);
 
     /*********************
      *  Local Functions  *
@@ -133,6 +149,8 @@ export default defineComponent({
       nePanel,
       nePanelConf,
       panelInfo,
+      components,
+      COMPONENTS,
       isInitialState,
       reCalcPanelSize,
       formatScale,

@@ -1,13 +1,20 @@
 <template>
-  <ne-panel/>
+  <ne-panel />
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "BasicUsage",
-  components: {}
+  components: {},
+  setup() {
+    const initStr = "[{\"name\":\"NeInputNode\",\"transform\":{\"x\":100,\"y\":50}}]";
+    const init = ref(JSON.parse(initStr));
+    return {
+      init
+    };
+  }
 });
 </script>
 

@@ -21,11 +21,15 @@
         <line y1="0" :x1="formatScale(nePanelConf.x)" y2="0" :x2="formatScale(nePanelConf.x + nePanelConf.width)"
               :stroke-width="formatScale(1)" class="coordinate-axis"/>
       </g>
+      <g>
+        <component v-for="(item, index) in components" :key="index" :is="COMPONENTS.get(item.name)"
+                   :x="item.transform.x" :y="item.transform.y"/>
+      </g>
     </svg>
     <div ref="ne-panel-info" :class="{'ne-panel-info':true, 'show':panelInfo.show}">
-      <p>缩放：{{ Math.ceil(nePanelConf.scale.value * 100) }}%</p>
-      <p>坐标：({{ panelInfo.mouse.realX.toFixed(1) }}, {{ panelInfo.mouse.realY.toFixed(1) }})</p>
-      <p>大小：{{ formatScale(nePanelConf.width).toFixed(0) }} * {{ formatScale(nePanelConf.height).toFixed(0) }}</p>
+      <p>缩放倍率：{{ Math.ceil(nePanelConf.scale.value * 100) }}%</p>
+      <p>指针坐标：({{ panelInfo.mouse.realX.toFixed(1) }}, {{ panelInfo.mouse.realY.toFixed(1) }})</p>
+      <p>画布大小：{{ formatScale(nePanelConf.width).toFixed(0) }} * {{ formatScale(nePanelConf.height).toFixed(0) }}</p>
     </div>
   </div>
 </template>

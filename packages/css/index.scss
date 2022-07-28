@@ -2,3 +2,22 @@ $grid-stroke-color: #003366;
 $selection-box-color: #ff4f81;
 
 $tips-background: rgba(0, 0, 0, 0.3);
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.ne-node {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  &:hover {
+    .main-container {
+      stroke: grey;
+      stroke-width: 2;
+    }
+  }
+}

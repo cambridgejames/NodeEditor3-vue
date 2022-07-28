@@ -32,7 +32,7 @@ export default [
           },
           include: [
             "packages/**/*",
-            "typings/shims-vue.d.ts"
+            "shims-vue.d.ts"
           ],
           exclude: [
             "node_modules",
