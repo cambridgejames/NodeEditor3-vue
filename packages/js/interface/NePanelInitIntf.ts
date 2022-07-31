@@ -12,4 +12,7 @@ const NePanelInit = (): NePanelInitIntf => {
   return {} as NePanelInitIntf;
 };
 
-export { NePanelInit, NePanelInitIntf };
+export {
+  NePanelInit,
+  NePanelInitIntf
+};

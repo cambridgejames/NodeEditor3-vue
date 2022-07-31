@@ -7,12 +7,7 @@ export interface NePanelConf {
     largeGridSize: number,
     smallGridSize: number
   },
-  scale: {
-    value: number,
-    minValue: number,
-    maxValue: number,
-    speed: number
-  }
+  scale: number
 }
 
 export interface PanelInfo {

@@ -1,19 +1,21 @@
 import Format from "./format";
+import Animate from "@/js/animate/animate";
+
 import { getBrowser } from "@/js/browser";
 import { getMouseEventProcessor } from "@/NePanel/src/js/event/mouseEventProcessor";
 import { getPanelInfoController } from "@/NePanel/src/js/controller/panelInfoController";
-import { NePanelInitIntf } from "@/js/interface/neNodeIntf";
+import { NePanelInitIntf } from "@/js/interface/NePanelInitIntf";
 
 import { defineComponent, onMounted, PropType, ref } from "vue";
 
-import NeInputNode from "../../../nodes/input/NeInputNode";
+import NeCompSvg from "@/components/NeCompSvg";
 
 import COMPONENTS from "@/nodes";
 
 export default defineComponent({
   name: "ne-panel",
   components: {
-    NeInputNode
+    NeCompSvg
   },
   props: {
     init: {
@@ -58,12 +60,7 @@ export default defineComponent({
         largeGridSize: 0,
         smallGridSize: 0
       },
-      scale: {
-        value: 1,
-        minValue: 0.02,
-        maxValue: 20,
-        speed: 0.1
-      }
+      scale: 1
     });
     const panelInfo = ref({
       ready: false,
@@ -76,6 +73,7 @@ export default defineComponent({
       }
     });
     const components = ref<NePanelInitIntf[]>(propsData.init);
+    const SCALE_ANIMATE_SPEED = 300;
 
     /*********************
      *  Local Functions  *
@@ -101,7 +99,7 @@ export default defineComponent({
      * @returns {Boolean} 视图是否处于初始状态
      */
     const isInitialState = (): boolean => {
-      return nePanelConf.value.scale.value === 1
+      return nePanelConf.value.scale === 1
         && nePanelConf.value.x === nePanelConf.value.width / -2
         && nePanelConf.value.y === nePanelConf.value.height / -2;
     };
@@ -122,10 +120,33 @@ export default defineComponent({
     };
 
     /**
+     * 重置缩放倍率
+     */
+    const resetScale = (): void => {
+      const TYPE = "easyInEasyOut";
+      Animate.push(nePanelConf.value.scale, 1, SCALE_ANIMATE_SPEED, (error, value) => {
+        if (error === null) {
+          nePanelConf.value.scale = value;
+          reCalcGrid();
+        }
+      }, TYPE);
+      Animate.push(nePanelConf.value.x, nePanelConf.value.width / -2, SCALE_ANIMATE_SPEED, (error, value) => {
+        if (error === null) {
+          nePanelConf.value.x = value;
+        }
+      }, TYPE);
+      Animate.push(nePanelConf.value.y, nePanelConf.value.height / -2, SCALE_ANIMATE_SPEED, (error, value) => {
+        if (error === null) {
+          nePanelConf.value.y = value;
+        }
+      }, TYPE);
+    };
+
+    /**
      * 重新计算网格参数
      */
     const reCalcGrid = (): void => {
-      nePanelConf.value.gridDef = Format.formatGrid(nePanelConf.value.scale.value);
+      nePanelConf.value.gridDef = Format.formatGrid(nePanelConf.value.scale);
     };
 
     /**
@@ -135,7 +156,7 @@ export default defineComponent({
      * @return 元素在svg画布中的宽度
      */
     const formatScale = (number: number): number => {
-      return Format.formatScale(number, nePanelConf.value.scale.value);
+      return Format.formatScale(number, nePanelConf.value.scale);
     };
 
     /************************
@@ -153,6 +174,7 @@ export default defineComponent({
       COMPONENTS,
       isInitialState,
       reCalcPanelSize,
+      resetScale,
       formatScale,
       MouseEventProcessor
     };

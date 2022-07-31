@@ -1,5 +1,5 @@
 <template>
-  <ne-panel />
+  <ne-panel :init="init"/>
 </template>
 
 <script lang="ts">
