@@ -1,5 +1,6 @@
 import Format from "./format";
 import Animate from "@/js/animate/animate";
+import { AnimateType, AnimateElement } from "@/js/animate/animateIntf";
 
 import { getBrowser } from "@/js/browser";
 import { getMouseEventProcessor } from "@/NePanel/src/js/event/mouseEventProcessor";
@@ -123,23 +124,36 @@ export default defineComponent({
      * 重置缩放倍率
      */
     const resetScale = (): void => {
-      const TYPE = "easyInEasyOut";
-      Animate.push(nePanelConf.value.scale, 1, SCALE_ANIMATE_SPEED, (error, value) => {
-        if (error === null) {
-          nePanelConf.value.scale = value;
-          reCalcGrid();
-        }
-      }, TYPE);
-      Animate.push(nePanelConf.value.x, nePanelConf.value.width / -2, SCALE_ANIMATE_SPEED, (error, value) => {
-        if (error === null) {
-          nePanelConf.value.x = value;
-        }
-      }, TYPE);
-      Animate.push(nePanelConf.value.y, nePanelConf.value.height / -2, SCALE_ANIMATE_SPEED, (error, value) => {
-        if (error === null) {
-          nePanelConf.value.y = value;
-        }
-      }, TYPE);
+      const timeNow = new Date().getTime();
+      Animate.push({
+        startValue: nePanelConf.value.scale,
+        endValue: 1,
+        startTime: timeNow,
+        speed: SCALE_ANIMATE_SPEED,
+        type: AnimateType.EASY_IN_EASY_OUT,
+        onValueChange: (value) => { nePanelConf.value.scale = value; reCalcGrid(); },
+        callback: null
+      } as AnimateElement);
+
+      Animate.push({
+        startValue: nePanelConf.value.x,
+        endValue: nePanelConf.value.width / -2,
+        startTime: timeNow,
+        speed: SCALE_ANIMATE_SPEED,
+        type: AnimateType.EASY_IN_EASY_OUT,
+        onValueChange: (value) => { nePanelConf.value.x = value; },
+        callback: null
+      } as AnimateElement);
+
+      Animate.push({
+        startValue: nePanelConf.value.y,
+        endValue: nePanelConf.value.height / -2,
+        startTime: timeNow,
+        speed: SCALE_ANIMATE_SPEED,
+        type: AnimateType.EASY_IN_EASY_OUT,
+        onValueChange: (value) => { nePanelConf.value.y = value; },
+        callback: null
+      } as AnimateElement);
     };
 
     /**
