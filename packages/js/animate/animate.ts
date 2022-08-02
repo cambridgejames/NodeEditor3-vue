@@ -89,12 +89,11 @@ const push = (element: AnimateElement): void => {
  * @param timerCleaner 所有动画元素全部执行完毕之后的回调
  */
 const execute = (timerCleaner: FinishCallback): void => {
-  const realTime = new Date().getTime();
   for (let i = ANIMATE_LIST.length - 1; i >= 0; i--) {
     const item = ANIMATE_LIST[i];
-    const progress = (realTime - item.startTime) / item.speed;
+    const progress = (new Date().getTime() - item.startTime) / item.speed;
     if (progress < 0) {
-      continue;
+      continue; // 支持延迟动画
     }
     const animateFunction = ANIMATE_TYPE_MAP.get(item.type);
     if (animateFunction !== undefined && animateFunction !== null) {
