@@ -26,9 +26,8 @@ export const getMouseEventProcessor = (nePanelConf: Ref<NePanelConf>, panelInfo:
     const goalScale = Format.formatScaleNumber(nePanelConf.value.scale, event.deltaY > 0);
     const realX = Format.formatScale(nePanelConf.value.x + event.offsetX, nePanelConf.value.scale);
     const realY = Format.formatScale(nePanelConf.value.y + event.offsetY, nePanelConf.value.scale);
-    const magicMultiply = goalScale - nePanelConf.value.scale;
-    nePanelConf.value.x += realX * magicMultiply;
-    nePanelConf.value.y += realY * magicMultiply;
+    nePanelConf.value.x += realX * (goalScale - nePanelConf.value.scale);
+    nePanelConf.value.y += realY * (goalScale - nePanelConf.value.scale);
     nePanelConf.value.scale = goalScale;
     // 重新计算Grid网格
     nePanelConf.value.gridDef = Format.formatGrid(nePanelConf.value.scale);
