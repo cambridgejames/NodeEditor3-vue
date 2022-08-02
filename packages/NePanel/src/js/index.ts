@@ -131,7 +131,7 @@ export default defineComponent({
         startTime: timeNow,
         speed: SCALE_ANIMATE_SPEED,
         type: AnimateType.EASY_IN_EASY_OUT,
-        onValueChange: (value) => { nePanelConf.value.scale = value; reCalcGrid(); },
+        onValueChange: (value) => { nePanelConf.value.scale = value; reCalcGrid(); PanelInfoController.showPanelInfo(); },
         callback: null
       } as AnimateElement);
 

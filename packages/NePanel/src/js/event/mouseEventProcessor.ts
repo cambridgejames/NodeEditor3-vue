@@ -23,7 +23,13 @@ export const getMouseEventProcessor = (nePanelConf: Ref<NePanelConf>, panelInfo:
       && !(event.deltaY < 0 && nePanelConf.value.scale < scaleConfigure.maxValue)) {
       return;
     }
-    nePanelConf.value.scale = Format.formatScaleNumber(nePanelConf.value.scale, event.deltaY > 0);
+    const goalScale = Format.formatScaleNumber(nePanelConf.value.scale, event.deltaY > 0);
+    const realX = Format.formatScale(nePanelConf.value.x + event.offsetX, nePanelConf.value.scale);
+    const realY = Format.formatScale(nePanelConf.value.y + event.offsetY, nePanelConf.value.scale);
+    const magicMultiply = goalScale - nePanelConf.value.scale;
+    nePanelConf.value.x += realX * magicMultiply;
+    nePanelConf.value.y += realY * magicMultiply;
+    nePanelConf.value.scale = goalScale;
     // 重新计算Grid网格
     nePanelConf.value.gridDef = Format.formatGrid(nePanelConf.value.scale);
     // 显示鼠标坐标
