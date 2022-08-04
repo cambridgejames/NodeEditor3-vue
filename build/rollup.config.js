@@ -13,8 +13,14 @@ export default [
     input: path.resolve(__dirname, "../packages/index.ts"),
     output: [
       {
+        file: pkg.module,
         format: "es",
-        file: pkg.module
+        exports: "named"
+      },
+      {
+        file: pkg.main,
+        format: "cjs",
+        exports: "named"
       }
     ],
     plugins: [

@@ -1,7 +1,8 @@
-import { Component, defineAsyncComponent } from "vue";
+import { Component } from "vue";
+import NeInputNode from "@/nodes/input/NeInputNode";
 
 const COMPONENTS = new Map<string, Component>();
 
-COMPONENTS.set("NeInputNode", defineAsyncComponent(() => import("./input/NeInputNode/index")));
+COMPONENTS.set("NeInputNode", NeInputNode);
 
 export default COMPONENTS;

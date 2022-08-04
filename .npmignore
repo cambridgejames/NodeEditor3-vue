@@ -16,6 +16,7 @@ typings/
 .gitignore
 .browserslistrc
 babel.config.js
+shims-vue.d.ts
 tsconfig.json
 tslint.json
 vue.config.js

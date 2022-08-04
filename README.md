@@ -1,4 +1,4 @@
-# 基于 Vue.js 3.x 的可视化节点编辑器组件
+# NodeEditor3-vue - 基于 Vue.js 3.x 的前端可视化节点编辑器组件
 
 ![](./imgs/ne-panel.png)
 
@@ -8,7 +8,7 @@
 
 ```shell
 # 执行以下命令在当前项目中安装NodeEditor3
-npm install vue-node-editor3 --save
+npm install node-editor3-vue --save
 ```
 
 ### 引入NodeEditor3
@@ -16,13 +16,13 @@ npm install vue-node-editor3 --save
 #### 完整引入
 
 ```typescript
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from "vue";
+import App from "./App.vue";
 
-import NodeEditor from "vue-node-editor3";
-import "vue-node-editor3/lib/bundle.min.css";
+import NodeEditor from "node-editor3-vue";
+import "node-editor3-vue/lib/bundle.min.css";
 
-createApp(App).use(NodeEditor).mount('#app')
+createApp(App).use(NodeEditor).mount('#app');
 ```
 
 以上代码便完成了NodeEditor的引入。需要注意的是，样式文件需要单独引入。
@@ -58,7 +58,7 @@ npm run build:clean
 
 项目地址：
 
-- GitHub [https://github.com/cambridgejames/vue-node-editor3](https://github.com/cambridgejames/vue-node-editor3)
-- Gitee [https://gitee.com/powerinv/vue-node-editor3](https://gitee.com/powerinv/vue-node-editor3)
+- GitHub [https://github.com/cambridgejames/NodeEditor3-vue](https://github.com/cambridgejames/NodeEditor3-vue)
+- Gitee [https://gitee.com/powerinv/node-editor3-vue](https://gitee.com/powerinv/node-editor3-vue)
 
 该项目签署了MIT授权许可，详情请参阅 [LICENSE](LICENSE) 文件
