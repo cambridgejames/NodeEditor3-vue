@@ -7,7 +7,8 @@
   "module": "lib/index.esm.js",
   "typings": "lib/index.d.ts",
   "keywords": [
-    "node editor"
+    "node editor",
+    "editor"
   ],
   "author": {
     "name": "Cambridge James",
