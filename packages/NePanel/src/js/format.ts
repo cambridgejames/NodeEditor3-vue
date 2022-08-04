@@ -9,6 +9,29 @@ const formatScale = (number: number, scale: number = 1.0): number => {
   return number / scale;
 };
 
+/**
+ * 获取缩放后的放大倍数
+ *
+ * @param currentScale 修改前的放大倍数
+ * @param wheelDirection 滚轮方向：true：缩小，false：放大
+ */
+const formatScaleNumber = (currentScale: number, wheelDirection: boolean): number => {
+  const confMap = [
+    [1000, 0], [100, 0], [10, 0], [1, 0], [0.1, 1], [0.01, 2], [0.001, 3]
+  ];
+  const fixNumber = (number: number, digits: number): number => {
+    return Number(number.toFixed(digits));
+  };
+  for (let i = 1; i < confMap.length; i++) {
+    if (wheelDirection && currentScale <= confMap[i - 1][0] && currentScale > confMap[i][0]) {
+      return fixNumber(currentScale - confMap[i][0], confMap[i][1]); // 缩小
+    } else if (!wheelDirection && currentScale < confMap[i - 1][0] && currentScale >= confMap[i][0]) {
+      return fixNumber(currentScale + confMap[i][0], confMap[i][1]); // 放大
+    }
+  }
+  return 1;
+};
+
 interface PanelGridDef {
   largeGridSize: number,
   smallGridSize: number
@@ -39,5 +62,6 @@ const formatGrid = (scaleValue: number): PanelGridDef => {
 
 export default {
   formatScale,
+  formatScaleNumber,
   formatGrid
 };

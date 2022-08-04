@@ -13,8 +13,14 @@ export default [
     input: path.resolve(__dirname, "../packages/index.ts"),
     output: [
       {
+        file: pkg.module,
         format: "es",
-        file: pkg.module
+        exports: "named"
+      },
+      {
+        file: pkg.main,
+        format: "cjs",
+        exports: "named"
       }
     ],
     plugins: [
@@ -32,7 +38,7 @@ export default [
           },
           include: [
             "packages/**/*",
-            "typings/shims-vue.d.ts"
+            "shims-vue.d.ts"
           ],
           exclude: [
             "node_modules",

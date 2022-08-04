@@ -1,12 +1,30 @@
 import Format from "./format";
+import Animate from "@/js/animate/animate";
+import { AnimateType, AnimateElement } from "@/js/animate/animateIntf";
+
 import { getBrowser } from "@/js/browser";
 import { getMouseEventProcessor } from "@/NePanel/src/js/event/mouseEventProcessor";
 import { getPanelInfoController } from "@/NePanel/src/js/controller/panelInfoController";
+import { NePanelInitIntf } from "@/js/interface/NePanelInitIntf";
 
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, PropType, ref } from "vue";
+
+import NeCompSvg from "@/components/NeCompSvg";
+
+import COMPONENTS from "@/nodes";
 
 export default defineComponent({
   name: "ne-panel",
+  components: {
+    NeCompSvg
+  },
+  props: {
+    init: {
+      type: Array as PropType<NePanelInitIntf[]>,
+      required: false,
+      default: [] as NePanelInitIntf[]
+    }
+  },
   directives: {
     resize: {
       mounted(el, bindings) {
@@ -23,7 +41,7 @@ export default defineComponent({
       }
     }
   },
-  setup: () => {
+  setup: (propsData) => {
     onMounted(() => {
       console.log(getBrowser());
       initPanelSize();
@@ -43,12 +61,7 @@ export default defineComponent({
         largeGridSize: 0,
         smallGridSize: 0
       },
-      scale: {
-        value: 1,
-        minValue: 0.02,
-        maxValue: 20,
-        speed: 0.1
-      }
+      scale: 1
     });
     const panelInfo = ref({
       ready: false,
@@ -60,6 +73,8 @@ export default defineComponent({
         realY: 0
       }
     });
+    const components = ref<NePanelInitIntf[]>(propsData.init);
+    const SCALE_ANIMATE_SPEED = 300;
 
     /*********************
      *  Local Functions  *
@@ -85,7 +100,7 @@ export default defineComponent({
      * @returns {Boolean} 视图是否处于初始状态
      */
     const isInitialState = (): boolean => {
-      return nePanelConf.value.scale.value === 1
+      return nePanelConf.value.scale === 1
         && nePanelConf.value.x === nePanelConf.value.width / -2
         && nePanelConf.value.y === nePanelConf.value.height / -2;
     };
@@ -106,10 +121,46 @@ export default defineComponent({
     };
 
     /**
+     * 重置缩放倍率
+     */
+    const resetScale = (): void => {
+      const timeNow = new Date().getTime();
+      Animate.push({
+        startValue: nePanelConf.value.scale,
+        endValue: 1,
+        startTime: timeNow,
+        speed: SCALE_ANIMATE_SPEED,
+        type: AnimateType.EASY_IN_EASY_OUT,
+        onValueChange: (value) => { nePanelConf.value.scale = value; reCalcGrid(); PanelInfoController.showPanelInfo(); },
+        callback: null
+      } as AnimateElement);
+
+      Animate.push({
+        startValue: nePanelConf.value.x,
+        endValue: nePanelConf.value.width / -2,
+        startTime: timeNow,
+        speed: SCALE_ANIMATE_SPEED,
+        type: AnimateType.EASY_IN_EASY_OUT,
+        onValueChange: (value) => { nePanelConf.value.x = value; },
+        callback: null
+      } as AnimateElement);
+
+      Animate.push({
+        startValue: nePanelConf.value.y,
+        endValue: nePanelConf.value.height / -2,
+        startTime: timeNow,
+        speed: SCALE_ANIMATE_SPEED,
+        type: AnimateType.EASY_IN_EASY_OUT,
+        onValueChange: (value) => { nePanelConf.value.y = value; },
+        callback: null
+      } as AnimateElement);
+    };
+
+    /**
      * 重新计算网格参数
      */
     const reCalcGrid = (): void => {
-      nePanelConf.value.gridDef = Format.formatGrid(nePanelConf.value.scale.value);
+      nePanelConf.value.gridDef = Format.formatGrid(nePanelConf.value.scale);
     };
 
     /**
@@ -119,7 +170,7 @@ export default defineComponent({
      * @return 元素在svg画布中的宽度
      */
     const formatScale = (number: number): number => {
-      return Format.formatScale(number, nePanelConf.value.scale.value);
+      return Format.formatScale(number, nePanelConf.value.scale);
     };
 
     /************************
@@ -133,8 +184,11 @@ export default defineComponent({
       nePanel,
       nePanelConf,
       panelInfo,
+      components,
+      COMPONENTS,
       isInitialState,
       reCalcPanelSize,
+      resetScale,
       formatScale,
       MouseEventProcessor
     };
