@@ -2,8 +2,11 @@
   <div ref="nePanel" class="ne-panel" v-resize="reCalcPanelSize">
     <svg ref="neSvgPanel" class="ne-svg-panel" :width="nePanelConf.width" :height="nePanelConf.height"
          :viewBox="`${formatScale(nePanelConf.x)} ${formatScale(nePanelConf.y)} ${formatScale(nePanelConf.width)} ${formatScale(nePanelConf.height)}`"
-         @wheel.stop.prevent="MouseEventProcessor.onMouseScroll"
-         @mousemove.stop.prevent="MouseEventProcessor.onMouseMove">
+         @wheel.prevent="MouseEventProcessor.onMouseScroll"
+         @mousemove.prevent="MouseEventProcessor.onMouseMove"
+         @mousedown.left.prevent="MouseEventProcessor.onMouseLeftDown"
+         @mousedown.right.prevent="MouseEventProcessor.onMouseRightDown"
+         @click.left.prevent @click.right.prevent>
       <!--网格和坐标系-->
       <g ref="grid-group" class="grid-group">
         <defs ref="grid-defs" class="grid-defs">

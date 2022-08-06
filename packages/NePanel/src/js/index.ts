@@ -12,6 +12,7 @@ import { defineComponent, onMounted, PropType, ref } from "vue";
 import NeCompSvg from "@/components/NeCompSvg";
 
 import COMPONENTS from "@/nodes";
+import { NePanelConfigure } from "@/js/interface/NePanelConfigure";
 
 export default defineComponent({
   name: "ne-panel",
@@ -177,8 +178,14 @@ export default defineComponent({
      *  Imported Functions  *
      ************************/
 
+    const configureParam = {
+      nePanel: nePanel,
+      nePanelConf: nePanelConf,
+      panelInfo: panelInfo
+    } as NePanelConfigure;
+
     const PanelInfoController = getPanelInfoController(panelInfo);
-    const MouseEventProcessor = getMouseEventProcessor(nePanelConf, panelInfo);
+    const MouseEventProcessor = getMouseEventProcessor(configureParam);
 
     return {
       nePanel,
