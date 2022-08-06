@@ -1,6 +1,6 @@
 {
   "name": "node-editor3-vue",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": false,
   "description": "基于 Vue.js 3.x 的前端可视化节点编辑器组件",
   "main": "lib/index.cjs.js",
