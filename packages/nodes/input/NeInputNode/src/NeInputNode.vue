@@ -1,46 +1,24 @@
 <template>
-  <g ref="ne-text" class="ne-node ne-text" :style="`--width: ${nodePanelConf.width}px; --height: ${nodePanelConf.height}px;`"
-     :transform="`translate(${nodePanelConf.x},${nodePanelConf.y})`">
-    <rect class="background" :transform="`translate(-0.5, -0.5)`"></rect>
+  <g ref="nodePanel" class="ne-node ne-text" :style="`--width: ${nodePanelConf.width}px; --height: ${nodePanelConf.height}px;`"
+     :transform="`translate(${nodePanelConf.x},${nodePanelConf.y})`"
+     @mousedown.left.stop.prevent>
+    <rect class="background" :x="-0.5" :y="-0.5"></rect>
     <g ref="input-title-group" class="title-group">
       <rect ref="text-title-back" class="title-back text-title-back"></rect>
       <text ref="text-title-text" class="title-text" x="4" y="14">{{ nodePanelConf.title }}</text>
       <circle ref="output-point" class="output-point" :cx="nodePanelConf.width - 6" cy="10" r="4"></circle>
     </g>
+    <g ref="input-footer-group" class="footer-group" :transform="`translate(0,${nodePanelConf.height - 20})`">
+      <rect class="resize" :x="nodePanelConf.width - 10" :y="10" :width="10" :height="10"
+            @mousedown.left.stop.prevent="MouseEventProcessor.onResizeDown"></rect>
+      <ne-comp-svg type="resize" class="resize" :x="nodePanelConf.width - 20" :width="20" :height="20"></ne-comp-svg>
+    </g>
   </g>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-
-export default defineComponent({
-  name: "NeInputNode",
-  components: {},
-  props: {
-    x: {
-      type: Number,
-      default: 0,
-      required: true
-    },
-    y: {
-      type: Number,
-      default: 0,
-      required: true
-    }
-  },
-  setup(propsData) {
-    const nodePanelConf = ref({
-      x: propsData.x,
-      y: propsData.y,
-      width: 120,
-      height: 40,
-      title: "输入"
-    });
-    return {
-      nodePanelConf
-    };
-  }
-});
+import NeInputNodeIndex from "./js/index";
+export default NeInputNodeIndex;
 </script>
 
 <style lang="scss" scoped>

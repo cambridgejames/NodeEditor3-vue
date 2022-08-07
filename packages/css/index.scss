@@ -52,6 +52,19 @@ $tips-background: rgba(0, 0, 0, 0.3);
     }
   }
 
+  .footer-group {
+    width: var(--width);
+    height: 20px;
+
+    .resize {
+      cursor: nwse-resize;
+    }
+
+    rect.resize {
+      fill: $node-background-color;
+    }
+  }
+
   &:hover {
     .background {
       stroke: $selected-node-border;
