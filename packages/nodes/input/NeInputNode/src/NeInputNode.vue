@@ -1,7 +1,7 @@
 <template>
   <g ref="nodePanel" class="ne-node ne-text" :style="`--width: ${nodePanelConf.width}px; --height: ${nodePanelConf.height}px;`"
      :transform="`translate(${nodePanelConf.x},${nodePanelConf.y})`"
-     @mousedown.left.stop.prevent>
+     @mousedown.left.stop.prevent="MouseEventProcessor.onMoveNodeDown">
     <rect class="background" :x="-0.5" :y="-0.5"></rect>
     <g ref="input-title-group" class="title-group">
       <rect ref="text-title-back" class="title-back text-title-back"></rect>

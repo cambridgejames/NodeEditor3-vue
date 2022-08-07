@@ -17,6 +17,36 @@ const getPanelElement = (nodeElement: HTMLElement | undefined): HTMLElement | un
 
 export const getMouseEventProcessor = (nodePanel: Ref<HTMLElement | undefined>, nodePanelConf: Ref<NeInputPanelIntf>) => {
   /**
+   * 移动节点事件响应方法
+   *
+   * @param event 鼠标事件
+   */
+  const onMoveNodeDown = (event: MouseEvent): void => {
+    const panelElement = getPanelElement(nodePanel.value);
+    const starting: Point = {
+      x: event.clientX,
+      y: event.clientY
+    };
+    const moveFunc = (event: Event): void => {
+      if (event instanceof MouseEvent) {
+        const mouseEvent = event as MouseEvent;
+        nodePanelConf.value.x += mouseEvent.clientX - starting.x;
+        nodePanelConf.value.y += mouseEvent.clientY - starting.y;
+        starting.x = mouseEvent.clientX;
+        starting.y = mouseEvent.clientY;
+      }
+    };
+    const mouseUpFunc = (event: Event): void => {
+      if (event instanceof MouseEvent) {
+        panelElement?.removeEventListener("mousemove", moveFunc);
+        panelElement?.removeEventListener("mouseup", mouseUpFunc);
+      }
+    };
+    panelElement?.addEventListener("mousemove", moveFunc);
+    panelElement?.addEventListener("mouseup", mouseUpFunc);
+  };
+
+  /**
    * 节点大小改变事件响应方法
    *
    * @param event 鼠标事件
@@ -51,6 +81,7 @@ export const getMouseEventProcessor = (nodePanel: Ref<HTMLElement | undefined>, 
   };
 
   return {
+    onMoveNodeDown,
     onResizeDown
   };
 };
