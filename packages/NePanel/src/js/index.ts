@@ -141,7 +141,7 @@ export default defineComponent({
         endValue: nePanelConf.value.width / -2,
         startTime: timeNow,
         speed: SCALE_ANIMATE_SPEED,
-        type: AnimateType.EASY_IN_EASY_OUT,
+        type: AnimateType.EASY_OUT,
         onValueChange: (value) => { nePanelConf.value.x = value; },
         callback: null
       } as AnimateElement);
@@ -151,7 +151,7 @@ export default defineComponent({
         endValue: nePanelConf.value.height / -2,
         startTime: timeNow,
         speed: SCALE_ANIMATE_SPEED,
-        type: AnimateType.EASY_IN_EASY_OUT,
+        type: AnimateType.EASY_OUT,
         onValueChange: (value) => { nePanelConf.value.y = value; },
         callback: null
       } as AnimateElement);
