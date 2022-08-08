@@ -12,7 +12,9 @@
     </div>
     <div ref="rightPanel" class="split-panel-slot right" :style="`--right:${preConf.right}px`"
          @mousedown.left.stop.prevent="MouseEventProcessor.onRightResize">
-      <slot name="right" @mousedown.left.stop></slot>
+      <div class="right-box" @mousedown.left.stop>
+        <slot name="right" @mousedown.left.stop></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -82,10 +84,12 @@ export default defineComponent({
 
     &.right {
       width: var(--right);
+      max-width: 1200px;
+      min-width: 50px;
       flex-shrink: 0;
       display: flex;
       flex-direction: row;
-      overflow: hidden auto;
+      overflow: hidden;
       background-color: $node-background-color;
       pointer-events: none;
 
@@ -94,6 +98,14 @@ export default defineComponent({
         flex-shrink: 0;
         content: "";
         cursor: ew-resize;
+        pointer-events: auto;
+      }
+
+      .right-box {
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: hidden auto;
         pointer-events: auto;
       }
     }
