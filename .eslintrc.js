@@ -21,6 +21,7 @@ module.exports = {
     "@typescript-eslint/ban-types": "off",
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
+    "node/no-callback-literal": 0,
     indent: ["error", 2],
     "space-before-function-paren": 0,
     quotes: ["error", "double"],

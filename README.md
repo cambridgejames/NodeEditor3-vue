@@ -1,58 +1,23 @@
-# NodeEditor3-vue - 基于 Vue.js 3.x 的前端可视化节点编辑器组件
+# NodeEditor3-vue
 
-![](./imgs/ne-panel.png)
+![GitHub](https://img.shields.io/github/license/cambridgejames/NodeEditor3-vue)
+![GitHub repo size](https://img.shields.io/github/repo-size/cambridgejames/NodeEditor3-vue)
+![npm](https://img.shields.io/npm/v/node-editor3-vue)
+![npm](https://img.shields.io/npm/dm/node-editor3-vue)
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/node-editor3-vue)
+![GitHub Repo stars](https://img.shields.io/github/stars/cambridgejames/NodeEditor3-vue?style=social)
 
-## 安装和使用
+---
 
-### npm安装
+## 简介
 
-```shell
-# 执行以下命令在当前项目中安装NodeEditor3
-npm install node-editor3-vue --save
-```
+NodeEditor3-vue 是一个基于 Vue.js 3.x 的前端可视化节点编辑器组件。
 
-### 引入NodeEditor3
+若要着手进行本组件的开发，请先参考[组件开发构建指南](./docs/build.md)。
 
-#### 完整引入
+若要快速上手并使用本组件，请参考[快速开始](./docs/quick-start.md)。
 
-```typescript
-import { createApp } from "vue";
-import App from "./App.vue";
-
-import NodeEditor from "node-editor3-vue";
-import "node-editor3-vue/lib/bundle.min.css";
-
-createApp(App).use(NodeEditor).mount('#app');
-```
-
-以上代码便完成了NodeEditor的引入。需要注意的是，样式文件需要单独引入。
-
-## 构建
-
-### 环境依赖
-
-1. NodeJs v16.15.1 (npm 8.11.0)
-2. Vue 3.2.37
-
-### 构建步骤
-
-```shell
-# 安装依赖包
-npm install --legacy-peer-deps
-
-# 运行示例
-npm run serve
-
-# 构建版本
-npm run build
-
-# 清理构建文件
-npm run build:clean
-```
-
-**注意！**
-
-由于ESlint存在大量的依赖冲突问题，安装依赖包时请加入`--legacy-peer-deps`参数以忽略依赖冲突
+若要为项目提交Issue，请转至右侧Github链接：[https://github.com/cambridgejames/NodeEditor3-vue/issues](https://github.com/cambridgejames/NodeEditor3-vue/issues)
 
 ## 版权说明
 
@@ -62,3 +27,7 @@ npm run build:clean
 - Gitee [https://gitee.com/powerinv/node-editor3-vue](https://gitee.com/powerinv/node-editor3-vue)
 
 该项目签署了MIT授权许可，详情请参阅 [LICENSE](LICENSE) 文件
+
+开发者邮箱：cambridge_james@foxmail.com
+
+![](./imgs/ne-panel.png)

@@ -1,5 +1,10 @@
 $grid-stroke-color: #003366;
 $selection-box-color: #ff4f81;
+$selected-node-border: #ffaa18;
+
+$node-background-color: #eee;
+
+$node-title-input: #bd2e2e;
 
 $tips-background: rgba(0, 0, 0, 0.3);
 
@@ -14,10 +19,55 @@ $tips-background: rgba(0, 0, 0, 0.3);
   -ms-user-select: none;
   user-select: none;
 
+  .background {
+    width: calc(1px + var(--width));
+    height: calc(1px + var(--height));
+    fill: $node-background-color;
+    stroke: $grid-stroke-color;
+    stroke-width: 1px;
+  }
+
+  .title-group {
+    cursor: pointer;
+
+    .title-back {
+      width: var(--width);
+      height: 20px;
+      outline: none;
+    }
+
+    .title-text {
+      font-size: 12px;
+      fill: white;
+      text-anchor: start;
+    }
+
+    .output-point {
+      fill: $selected-node-border;
+
+      &:hover {
+        fill: white;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .footer-group {
+    width: var(--width);
+    height: 20px;
+
+    .resize {
+      cursor: nwse-resize;
+    }
+
+    rect.resize {
+      fill: $node-background-color;
+    }
+  }
+
   &:hover {
-    .main-container {
-      stroke: grey;
-      stroke-width: 2;
+    .background {
+      stroke: $selected-node-border;
     }
   }
 }

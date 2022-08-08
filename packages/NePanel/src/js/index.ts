@@ -10,13 +10,16 @@ import { NePanelInitIntf } from "@/js/interface/NePanelInitIntf";
 import { defineComponent, onMounted, PropType, ref } from "vue";
 
 import NeCompSvg from "@/components/NeCompSvg";
+import NeSplitPanel from "@/components/NeSplitPanel";
 
 import COMPONENTS from "@/nodes";
+import { NePanelConfigure } from "@/js/interface/NePanelConfigure";
 
 export default defineComponent({
   name: "ne-panel",
   components: {
-    NeCompSvg
+    NeCompSvg,
+    NeSplitPanel
   },
   props: {
     init: {
@@ -140,7 +143,7 @@ export default defineComponent({
         endValue: nePanelConf.value.width / -2,
         startTime: timeNow,
         speed: SCALE_ANIMATE_SPEED,
-        type: AnimateType.EASY_IN_EASY_OUT,
+        type: AnimateType.EASY_OUT,
         onValueChange: (value) => { nePanelConf.value.x = value; },
         callback: null
       } as AnimateElement);
@@ -150,7 +153,7 @@ export default defineComponent({
         endValue: nePanelConf.value.height / -2,
         startTime: timeNow,
         speed: SCALE_ANIMATE_SPEED,
-        type: AnimateType.EASY_IN_EASY_OUT,
+        type: AnimateType.EASY_OUT,
         onValueChange: (value) => { nePanelConf.value.y = value; },
         callback: null
       } as AnimateElement);
@@ -177,8 +180,14 @@ export default defineComponent({
      *  Imported Functions  *
      ************************/
 
+    const configureParam = {
+      nePanel: nePanel,
+      nePanelConf: nePanelConf,
+      panelInfo: panelInfo
+    } as NePanelConfigure;
+
     const PanelInfoController = getPanelInfoController(panelInfo);
-    const MouseEventProcessor = getMouseEventProcessor(nePanelConf, panelInfo);
+    const MouseEventProcessor = getMouseEventProcessor(configureParam);
 
     return {
       nePanel,
