@@ -1,5 +1,5 @@
 import { NeInputPanelIntf } from "@/nodes/input/NeInputNode/src/js/interface/neInputPanelIntf";
-import { Ref } from "vue";
+import { Ref, SetupContext } from "vue";
 import { Point } from "@/js/interface/2d/Point";
 
 /**
@@ -15,7 +15,54 @@ const getPanelElement = (nodeElement: HTMLElement | undefined): HTMLElement | un
   return parentElement;
 };
 
-export const getMouseEventProcessor = (nodePanel: Ref<HTMLElement | undefined>, nodePanelConf: Ref<NeInputPanelIntf>) => {
+export const getMouseEventProcessor = (nodePanel: Ref<HTMLElement | undefined>, nodePanelConf: Ref<NeInputPanelIntf>,
+  context: SetupContext) => {
+  /**
+   * 左键点击事件响应方法
+   *
+   * @param event 鼠标事件
+   */
+  const onLeftDown = (event: MouseEvent): void => {
+    const nodeElement = nodePanel.value;
+    const starting: Point = {
+      x: event.clientX,
+      y: event.clientY
+    };
+    const mouseUpFunc = (subEvent: Event): void => {
+      if (subEvent instanceof MouseEvent) {
+        const mouseEvent = subEvent as MouseEvent;
+        if (mouseEvent.clientX === starting.x && mouseEvent.clientY === starting.y) {
+          context.emit("neleftlick", event);
+        }
+      }
+      nodeElement?.removeEventListener("mouseup", mouseUpFunc);
+    };
+    nodeElement?.addEventListener("mouseup", mouseUpFunc);
+  };
+
+  /**
+   * 右键点击事件响应方法
+   *
+   * @param event 鼠标事件
+   */
+  const onRightDown = (event: MouseEvent): void => {
+    const nodeElement = nodePanel.value;
+    const starting: Point = {
+      x: event.clientX,
+      y: event.clientY
+    };
+    const mouseUpFunc = (subEvent: Event): void => {
+      if (subEvent instanceof MouseEvent) {
+        const mouseEvent = subEvent as MouseEvent;
+        if (mouseEvent.clientX === starting.x && mouseEvent.clientY === starting.y) {
+          context.emit("nerightclick", event);
+        }
+      }
+      nodeElement?.removeEventListener("mouseup", mouseUpFunc);
+    };
+    nodeElement?.addEventListener("mouseup", mouseUpFunc);
+  };
+
   /**
    * 移动节点事件响应方法
    *
@@ -81,6 +128,8 @@ export const getMouseEventProcessor = (nodePanel: Ref<HTMLElement | undefined>, 
   };
 
   return {
+    onLeftDown,
+    onRightDown,
     onMoveNodeDown,
     onResizeDown
   };

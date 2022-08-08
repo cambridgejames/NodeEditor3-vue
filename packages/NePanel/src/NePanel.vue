@@ -27,7 +27,9 @@
       </g>
       <g>
         <component v-for="(item, index) in components" :key="index" :is="COMPONENTS.get(item.name)"
-                   :x="item.transform.x" :y="item.transform.y"/>
+                   :class="{'selected':true}" :x="item.transform.x" :y="item.transform.y"
+                   @neleftclick.stop.prevent=""
+                   @nerightclick.stop.prevent=""/>
       </g>
     </svg>
     <div ref="ne-panel-reset" :class="{'ne-panel-reset':true, 'show':!isInitialState()}" @click="resetScale">

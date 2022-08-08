@@ -1,4 +1,4 @@
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, SetupContext } from "vue";
 import NeCompSvg from "@/components/NeCompSvg";
 import { NeInputPanelIntf } from "@/nodes/input/NeInputNode/src/js/interface/neInputPanelIntf";
 import { getMouseEventProcessor } from "@/nodes/input/NeInputNode/src/js/event/mouseEventProcessor";
@@ -20,7 +20,7 @@ export default defineComponent({
       required: true
     }
   },
-  setup(propsData) {
+  setup(propsData, context: SetupContext) {
     const nodePanel = ref<HTMLElement>();
     const nodePanelConf = ref({
       x: propsData.x,
@@ -36,7 +36,7 @@ export default defineComponent({
      *  Imported Functions  *
      ************************/
 
-    const MouseEventProcessor = getMouseEventProcessor(nodePanel, nodePanelConf);
+    const MouseEventProcessor = getMouseEventProcessor(nodePanel, nodePanelConf, context);
 
     return {
       nodePanel,

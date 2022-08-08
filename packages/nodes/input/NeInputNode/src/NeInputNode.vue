@@ -1,10 +1,12 @@
 <template>
   <g ref="nodePanel" class="ne-node ne-text" :style="`--width: ${nodePanelConf.width}px; --height: ${nodePanelConf.height}px;`"
      :transform="`translate(${nodePanelConf.x},${nodePanelConf.y})`"
-     @mousedown.left.stop.prevent="MouseEventProcessor.onMoveNodeDown">
+     @mousedown.left.stop.prevent>
     <rect class="background" :x="-0.5" :y="-0.5"></rect>
     <g ref="input-title-group" class="title-group">
-      <rect ref="text-title-back" class="title-back text-title-back"></rect>
+      <rect ref="text-title-back" class="title-back text-title-back"
+            @mousedown.left.stop.prevent="MouseEventProcessor.onMoveNodeDown"
+            @mousedown.right.prevent="MouseEventProcessor.onRightDown"></rect>
       <text ref="text-title-text" class="title-text" x="4" y="14">{{ nodePanelConf.title }}</text>
       <circle ref="output-point" class="output-point" :cx="nodePanelConf.width - 6" cy="10" r="4"></circle>
     </g>
