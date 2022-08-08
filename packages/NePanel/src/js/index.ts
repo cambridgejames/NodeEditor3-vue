@@ -10,6 +10,7 @@ import { NePanelInitIntf } from "@/js/interface/NePanelInitIntf";
 import { defineComponent, onMounted, PropType, ref } from "vue";
 
 import NeCompSvg from "@/components/NeCompSvg";
+import NeSplitPanel from "@/components/NeSplitPanel";
 
 import COMPONENTS from "@/nodes";
 import { NePanelConfigure } from "@/js/interface/NePanelConfigure";
@@ -17,7 +18,8 @@ import { NePanelConfigure } from "@/js/interface/NePanelConfigure";
 export default defineComponent({
   name: "ne-panel",
   components: {
-    NeCompSvg
+    NeCompSvg,
+    NeSplitPanel
   },
   props: {
     init: {
