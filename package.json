@@ -17,10 +17,13 @@
   "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "yarn build:clean && yarn build:lib && yarn build:esm-bundle && rimraf lib/demo.html",
-    "build:clean": "rimraf lib",
+    "serve:doc": "vuepress dev docs --cache docs/.vuepress/.cache --temp docs/.vuepress/.temp",
+    "build": "yarn clean && yarn build:lib && yarn build:esm-bundle && rimraf lib/demo.html",
     "build:lib": "vue-cli-service build --target lib --name index --dest lib ./packages/index.ts",
-    "build:esm-bundle": "rollup --config ./build/rollup.config.js"
+    "build:esm-bundle": "rollup --config ./build/rollup.config.js",
+    "build:docs": "vuepress build docs --dest site --cache docs/.vuepress/.cache --temp docs/.vuepress/.temp",
+    "clean": "rimraf lib",
+    "clean:docs": "rimraf docs/.vuepress/.cache && rimraf docs/.vuepress/.temp && rimraf site"
   },
   "dependencies": {
     "core-js": "^3.8.3",
@@ -48,7 +51,8 @@
     "rollup-plugin-vue": "^6.0.0",
     "sass": "^1.32.7",
     "sass-loader": "^12.0.0",
-    "typescript": "~4.5.5"
+    "typescript": "~4.5.5",
+    "vuepress": "^2.0.0-beta.49"
   },
   "browserslist": [
     "> 1%",
