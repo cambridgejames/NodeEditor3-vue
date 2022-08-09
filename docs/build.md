@@ -2,28 +2,33 @@
 
 ## 环境依赖
 
-1. Node.js >=16.15.1 (npm >=8.11.0)
-2. Vue.js >= 3.2.37
+1. Node.js v16+
+2. Vue.js 3.x
+3. yarn v1
 
 ## 构建步骤
 
+NodeEditor3-vue使用yarn来管理依赖。因此在开始构建之前，你需要先全局安装yarn。
+
 ```shell
-# 安装依赖包
-npm install --legacy-peer-deps
-
-# 运行示例
-npm run serve
-
-# 构建版本
-npm run build
-
-# 清理构建文件
-npm run build:clean
+npm install yarn -g
 ```
 
-**注意！**
+你可以使用`yarn -v`命令来验证安装结果。确认安装完成后，就可以使用`yarn`命令来构建本组件了：
 
-由于ESlint存在大量的依赖冲突问题，安装依赖包时请加入`--legacy-peer-deps`参数以忽略依赖冲突
+```shell
+# 安装依赖包
+yarn install
+
+# 运行示例
+yarn serve
+
+# 构建版本
+yarn build
+
+# 清理构建文件
+yarn build:clean
+```
 
 ## 目录结构
 

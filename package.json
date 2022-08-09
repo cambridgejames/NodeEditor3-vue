@@ -17,7 +17,7 @@
   "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "npm run build:clean && npm run build:lib && npm run build:esm-bundle && rimraf lib/demo.html",
+    "build": "yarn build:clean && yarn build:lib && yarn build:esm-bundle && rimraf lib/demo.html",
     "build:clean": "rimraf lib",
     "build:lib": "vue-cli-service build --target lib --name index --dest lib ./packages/index.ts",
     "build:esm-bundle": "rollup --config ./build/rollup.config.js"
@@ -31,8 +31,6 @@
     "@types/node": "^18.0.3",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
-    "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-typescript": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "@vue/eslint-config-standard": "^6.1.0",
