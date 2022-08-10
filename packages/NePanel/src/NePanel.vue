@@ -44,7 +44,9 @@
         </div>
       </div>
     </template>
-    <template #right>{{ rightContent.solutionValue }}</template>
+    <template #right>
+      {{ rightContent.solutionValue }}
+    </template>
   </ne-split-panel>
 </template>
 
