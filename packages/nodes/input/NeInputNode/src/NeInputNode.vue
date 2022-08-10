@@ -3,12 +3,13 @@
      :transform="`translate(${nodePanelConf.x},${nodePanelConf.y})`"
      @mousedown.left.stop.prevent>
     <rect class="background" :x="-0.5" :y="-0.5"></rect>
-    <g ref="input-title-group" class="title-group">
-      <rect ref="text-title-back" class="title-back text-title-back"
-            @mousedown.left.stop.prevent="MouseEventProcessor.onMoveNodeDown"
-            @mousedown.right.prevent="MouseEventProcessor.onRightDown"></rect>
+    <g ref="input-title-group" class="title-group"
+       @mousedown.left.stop.prevent="MouseEventProcessor.onMoveNodeDown"
+       @mousedown.right.prevent="MouseEventProcessor.onRightDown">
+      <rect ref="text-title-back" class="title-back text-title-back"></rect>
       <text ref="text-title-text" class="title-text" x="4" y="14">{{ nodePanelConf.title }}</text>
-      <circle ref="output-point" class="output-point" :cx="nodePanelConf.width - 6" cy="10" r="4"></circle>
+      <circle ref="output-point" class="output-point" :cx="nodePanelConf.width - 6" cy="10" r="4"
+              @mousedown.left.stop.prevent></circle>
     </g>
     <g ref="input-footer-group" class="footer-group" :transform="`translate(0,${nodePanelConf.height - 20})`">
       <rect class="resize" :x="nodePanelConf.width - 10" :y="10" :width="10" :height="10"

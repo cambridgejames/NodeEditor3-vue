@@ -7,13 +7,14 @@ import { getMouseEventProcessor } from "@/NePanel/src/js/event/mouseEventProcess
 import { getPanelInfoController } from "@/NePanel/src/js/controller/panelInfoController";
 import { NePanelInitIntf } from "@/js/interface/NePanelInitIntf";
 
-import { defineComponent, onMounted, PropType, ref } from "vue";
+import { defineComponent, onMounted, PropType, provide, ref } from "vue";
 
 import NeCompSvg from "@/components/NeCompSvg";
 import NeSplitPanel from "@/components/NeSplitPanel";
 
 import COMPONENTS from "@/nodes";
 import { NePanelConfigure } from "@/js/interface/NePanelConfigure";
+import { getSubEventProcessor } from "@/NePanel/src/js/event/subEventProcessor";
 
 export default defineComponent({
   name: "ne-panel",
@@ -77,7 +78,16 @@ export default defineComponent({
       }
     });
     const components = ref<NePanelInitIntf[]>(propsData.init);
+    const rightContent = ref({
+      solutionValue: ""
+    });
     const SCALE_ANIMATE_SPEED = 300;
+
+    /********************
+     *  Provide Params  *
+     ********************/
+
+    provide("panelConf", nePanelConf);
 
     /*********************
      *  Local Functions  *
@@ -188,18 +198,21 @@ export default defineComponent({
 
     const PanelInfoController = getPanelInfoController(panelInfo);
     const MouseEventProcessor = getMouseEventProcessor(configureParam);
+    const SubEventProcessor = getSubEventProcessor(rightContent);
 
     return {
       nePanel,
       nePanelConf,
       panelInfo,
       components,
+      rightContent,
       COMPONENTS,
       isInitialState,
       reCalcPanelSize,
       resetScale,
       formatScale,
-      MouseEventProcessor
+      MouseEventProcessor,
+      SubEventProcessor
     };
   }
 });

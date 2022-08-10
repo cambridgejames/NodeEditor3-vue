@@ -30,7 +30,7 @@
           <g>
             <component v-for="(item, index) in components" :key="index" :is="COMPONENTS.get(item.name)"
                        :class="{'selected':true}" :x="item.transform.x" :y="item.transform.y"
-                       @neleftclick.stop.prevent=""
+                       @ne-left-click.stop.prevent="event => SubEventProcessor.onNeLeftClick(event, item)"
                        @nerightclick.stop.prevent=""/>
           </g>
         </svg>
@@ -44,6 +44,7 @@
         </div>
       </div>
     </template>
+    <template #right>{{ rightContent.solutionValue }}</template>
   </ne-split-panel>
 </template>
 
