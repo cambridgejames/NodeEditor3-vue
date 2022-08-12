@@ -1,8 +1,12 @@
-import { Component } from "vue";
-import NeInputNode from "@/nodes/input/NeInputNode";
+import { NeNodeExport } from "@/js/interface/node/NeNodeExport";
 
-const COMPONENTS = new Map<string, Component>();
+import NeInputNodeExport from "@/nodes/input/NeInputNode";
 
-COMPONENTS.set("NeInputNode", NeInputNode);
+const componentList = new Array<NeNodeExport>();
+componentList.push(NeInputNodeExport);
 
-export default COMPONENTS;
+const COMPONENT_MAP = new Map<string, NeNodeExport>();
+for (const exportElement of componentList) {
+  COMPONENT_MAP.set(exportElement.name, exportElement);
+}
+export default COMPONENT_MAP;
