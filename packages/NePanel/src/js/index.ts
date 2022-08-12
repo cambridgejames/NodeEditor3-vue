@@ -11,6 +11,7 @@ import { defineComponent, onMounted, PropType, provide, ref } from "vue";
 
 import NeCompSvg from "@/components/NeCompSvg";
 import NeSplitPanel from "@/components/NeSplitPanel";
+import NeDetailPanel from "@/components/NeDetailPanel";
 
 import COMPONENTS from "@/nodes";
 import { NePanelConfigure } from "@/js/interface/NePanelConfigure";
@@ -20,7 +21,8 @@ export default defineComponent({
   name: "ne-panel",
   components: {
     NeCompSvg,
-    NeSplitPanel
+    NeSplitPanel,
+    NeDetailPanel
   },
   props: {
     init: {

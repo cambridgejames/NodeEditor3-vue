@@ -45,7 +45,11 @@
       </div>
     </template>
     <template #right>
-      {{ rightContent.solutionValue }}
+      <ne-detail-panel>
+        <template #value>
+          {{ rightContent.solutionValue }}
+        </template>
+      </ne-detail-panel>
     </template>
   </ne-split-panel>
 </template>

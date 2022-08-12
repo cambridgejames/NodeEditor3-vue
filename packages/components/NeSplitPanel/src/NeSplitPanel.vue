@@ -93,9 +93,10 @@ export default defineComponent({
       overflow: hidden;
       background-color: $node-background-color;
       pointer-events: none;
+      padding: 6px 0;
 
       &:before {
-        width: 10px;
+        width: 6px;
         flex-shrink: 0;
         content: "";
         cursor: ew-resize;
@@ -105,9 +106,17 @@ export default defineComponent({
       .right-box {
         display: block;
         width: 100%;
-        height: 100%;
+        height: calc(100% - 12px);
         overflow: hidden auto;
         pointer-events: auto;
+      }
+
+      &:after {
+        width: 6px;
+        flex-shrink: 0;
+        content: "";
+        cursor: ew-resize;
+        pointer-events: none;
       }
     }
   }
