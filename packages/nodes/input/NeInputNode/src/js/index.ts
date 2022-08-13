@@ -1,9 +1,10 @@
 import { defineComponent, ref, SetupContext } from "vue";
 import { NeInputPanelIntf } from "@/nodes/input/NeInputNode/src/js/interface/neInputPanelIntf";
 import NeBaseNode from "@/nodes/base/NeBaseNode";
+import Configure from "../configure";
 
 export default defineComponent({
-  name: "NeInputNode",
+  name: Configure.name,
   components: {
     NeBaseNode
   },
@@ -28,8 +29,8 @@ export default defineComponent({
     const nodePanelConf = ref({
       x: propsData.x,
       y: propsData.y,
-      title: "输入",
-      color: "#bd2e2e"
+      title: Configure.title,
+      color: Configure.color
     } as NeInputPanelIntf);
 
     const onNeLeftClick = (event: MouseEvent): void => {

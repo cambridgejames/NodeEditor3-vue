@@ -1,5 +1,5 @@
 <template>
-  <ne-split-panel :left="200" :right="400">
+  <ne-split-panel :left="150" :right="300">
     <template #center>
       <div ref="nePanel" class="ne-panel" v-resize="reCalcPanelSize">
         <svg ref="neSvgPanel" class="ne-svg-panel" :width="nePanelConf.width" :height="nePanelConf.height"
