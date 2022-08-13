@@ -54,6 +54,11 @@ export default defineComponent({
     }
   }
 
+  &:hover {
+    cursor: grab;
+    border-color: $selected-node-border;
+  }
+
   &:not(:first-child) {
     margin-top: 6px;
   }

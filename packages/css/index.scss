@@ -22,11 +22,6 @@ $tips-background: rgba(0, 0, 0, 0.3);
 }
 
 .ne-node {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-
   .background {
     width: calc(1px + var(--width));
     height: calc(1px + var(--height));

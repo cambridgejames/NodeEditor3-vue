@@ -39,10 +39,10 @@
                        @ne-right-click.stop.prevent=""/>
           </g>
         </svg>
-        <div ref="ne-panel-reset" :class="{'ne-panel-reset':true, 'show':!isInitialState()}" @click="resetScale">
+        <div ref="ne-panel-reset" :class="{'ne-panel-reset':true, 'none-selective': true, 'show':!isInitialState()}" @click="resetScale">
           <ne-comp-svg type="reset" :width="20" :height="20"></ne-comp-svg>
         </div>
-        <div ref="ne-panel-info" :class="{'ne-panel-info':true, 'show':panelInfo.show}">
+        <div ref="ne-panel-info" :class="{'ne-panel-info':true, 'none-selective': true, 'show':panelInfo.show}">
           <p>缩放倍率：{{ Math.ceil(nePanelConf.scale * 100) }}%</p>
           <p>指针坐标：({{ panelInfo.mouse.realX.toFixed(1) }}, {{ panelInfo.mouse.realY.toFixed(1) }})</p>
           <p>画布大小：{{ formatScale(nePanelConf.width).toFixed(0) }} * {{ formatScale(nePanelConf.height).toFixed(0) }}</p>

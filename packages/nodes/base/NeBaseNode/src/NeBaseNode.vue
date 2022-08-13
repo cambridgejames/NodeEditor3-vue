@@ -1,5 +1,5 @@
 <template>
-  <g ref="nodePanel" class="ne-node ne-text" :transform="`translate(${nodePanelConf.x},${nodePanelConf.y})`"
+  <g ref="nodePanel" class="ne-node ne-text none-selective" :transform="`translate(${nodePanelConf.x},${nodePanelConf.y})`"
      :style="`--width: ${nodePanelConf.width}px; --height: ${nodePanelConf.height}px; --color: ${nodePanelConf.color}`"
      @mousedown.left.stop.prevent>
     <rect class="background" :x="-0.5" :y="-0.5"></rect>

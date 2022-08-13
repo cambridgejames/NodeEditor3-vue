@@ -1,13 +1,13 @@
 <template>
   <div ref="detailPanel" class="detail-panel-container" :style="`--height:${preConf.top}px`">
     <div class="detail-panel-element top">
-      <div class="title-bar">计算结果</div>
+      <div class="title-bar none-selective">计算结果</div>
       <div class="contains-bar">
         <slot name="value"></slot>
       </div>
     </div>
     <div class="detail-panel-element bottom">
-      <div class="title-bar">节点信息</div>
+      <div class="title-bar none-selective">节点信息</div>
       <div class="contains-bar">
         <slot name="element"></slot>
       </div>
