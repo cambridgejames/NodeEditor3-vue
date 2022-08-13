@@ -1,10 +1,11 @@
 import { Component } from "vue";
+import { Configure } from "@/js/interface/node/Configure";
 
 export interface NeNodeExport {
   /**
-   * 节点名称
+   * 节点配置信息
    */
-  name: string
+  configure: Configure
 
   /**
    * 节点组件

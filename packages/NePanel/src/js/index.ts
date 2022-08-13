@@ -11,9 +11,10 @@ import { Component, defineComponent, markRaw, onMounted, PropType, provide, ref 
 
 import NeCompSvg from "@/components/NeCompSvg";
 import NeSplitPanel from "@/components/NeSplitPanel";
+import NeListNode from "@/components/NeListNode";
 import NeDetailPanel from "@/components/NeDetailPanel";
 
-import COMPONENT_MAP from "@/nodes";
+import COMPONENT_MAP, { componentList } from "@/nodes";
 import { NePanelConfigure } from "@/js/interface/NePanelConfigure";
 import { getSubEventProcessor } from "@/NePanel/src/js/event/subEventProcessor";
 
@@ -22,6 +23,7 @@ export default defineComponent({
   components: {
     NeCompSvg: markRaw(NeCompSvg),
     NeSplitPanel: markRaw(NeSplitPanel),
+    NeListNode: NeListNode,
     NeDetailPanel: markRaw(NeDetailPanel)
   },
   props: {
@@ -210,6 +212,7 @@ export default defineComponent({
       components,
       rightContent,
       rightElement,
+      componentList,
       COMPONENT_MAP,
       isInitialState,
       reCalcPanelSize,

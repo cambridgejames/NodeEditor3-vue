@@ -12,7 +12,7 @@ NeInputDetail.install = (app: App): void => {
 };
 
 export default {
-  name: NeInputConfigure.name,
+  configure: NeInputConfigure,
   node: markRaw(NeInputNode),
   detail: markRaw(NeInputDetail)
 } as NeNodeExport;

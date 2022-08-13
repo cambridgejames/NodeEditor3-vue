@@ -1,5 +1,11 @@
 @import "../../../css/index.scss";
 
+.node-list-container {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 3px;
+}
+
 .ne-panel {
   width: 100%;
   height: 100%;

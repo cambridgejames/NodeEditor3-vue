@@ -1,5 +1,10 @@
 <template>
   <ne-split-panel :left="150" :right="300">
+    <template #left>
+      <div class="node-list-container">
+        <ne-list-node v-for="(item, index) in componentList" :key="index" :node="item.configure"></ne-list-node>
+      </div>
+    </template>
     <template #center>
       <div ref="nePanel" class="ne-panel" v-resize="reCalcPanelSize">
         <svg ref="neSvgPanel" class="ne-svg-panel" :width="nePanelConf.width" :height="nePanelConf.height"
