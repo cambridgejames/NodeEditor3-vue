@@ -7,7 +7,7 @@ import { getMouseEventProcessor } from "@/NePanel/src/js/event/mouseEventProcess
 import { getPanelInfoController } from "@/NePanel/src/js/controller/panelInfoController";
 import { NePanelInitIntf } from "@/js/interface/NePanelInitIntf";
 
-import { Component, defineComponent, onMounted, PropType, provide, ref } from "vue";
+import { Component, defineComponent, markRaw, onMounted, PropType, provide, ref } from "vue";
 
 import NeCompSvg from "@/components/NeCompSvg";
 import NeSplitPanel from "@/components/NeSplitPanel";
@@ -20,9 +20,9 @@ import { getSubEventProcessor } from "@/NePanel/src/js/event/subEventProcessor";
 export default defineComponent({
   name: "ne-panel",
   components: {
-    NeCompSvg,
-    NeSplitPanel,
-    NeDetailPanel
+    NeCompSvg: markRaw(NeCompSvg),
+    NeSplitPanel: markRaw(NeSplitPanel),
+    NeDetailPanel: markRaw(NeDetailPanel)
   },
   props: {
     init: {

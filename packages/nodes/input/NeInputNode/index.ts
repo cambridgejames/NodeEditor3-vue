@@ -1,4 +1,4 @@
-import { App } from "vue";
+import { App, markRaw } from "vue";
 import NeInputNode from "./src/NeInputNode.vue";
 import NeInputDetail from "./src/NeInputDetail.vue";
 import { NeNodeExport } from "@/js/interface/node/NeNodeExport";
@@ -12,6 +12,6 @@ NeInputDetail.install = (app: App): void => {
 
 export default {
   name: "NeInputNode",
-  node: NeInputNode,
-  detail: NeInputDetail
+  node: markRaw(NeInputNode),
+  detail: markRaw(NeInputDetail)
 } as NeNodeExport;

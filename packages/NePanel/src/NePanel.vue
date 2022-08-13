@@ -31,7 +31,7 @@
             <component v-for="(item, index) in components" :key="index" :is="COMPONENT_MAP.get(item.name).node"
                        :class="{'selected':true}" :x="item.transform.x" :y="item.transform.y"
                        @ne-left-click.stop.prevent="event => SubEventProcessor.onNeLeftClick(event, COMPONENT_MAP.get(item.name))"
-                       @nerightclick.stop.prevent=""/>
+                       @ne-right-click.stop.prevent=""/>
           </g>
         </svg>
         <div ref="ne-panel-reset" :class="{'ne-panel-reset':true, 'show':!isInitialState()}" @click="resetScale">

@@ -1,4 +1,4 @@
-import { NeInputPanelIntf } from "@/nodes/input/NeInputNode/src/js/interface/neInputPanelIntf";
+import { NeInputPanelIntf } from "../interface/neInputPanelIntf";
 import { Ref, SetupContext } from "vue";
 import { Point } from "@/js/interface/2d/Point";
 import Format from "@/NePanel/src/js/format";
@@ -33,7 +33,7 @@ export const getMouseEventProcessor = (nodePanel: Ref<HTMLElement | undefined>, 
       if (subEvent instanceof MouseEvent) {
         const mouseEvent = subEvent as MouseEvent;
         if (mouseEvent.clientX === starting.x && mouseEvent.clientY === starting.y) {
-          context.emit("nerightclick", event);
+          context.emit("neRightClick", event);
         }
       }
       nodeElement?.removeEventListener("mouseup", mouseUpFunc);
@@ -111,7 +111,6 @@ export const getMouseEventProcessor = (nodePanel: Ref<HTMLElement | undefined>, 
   };
 
   return {
-    // onLeftDown,
     onRightDown,
     onMoveNodeDown,
     onResizeDown
