@@ -107,7 +107,7 @@ export default defineComponent({
         display: block;
         width: 100%;
         height: calc(100% - 12px);
-        overflow: hidden auto;
+        overflow: hidden;
         pointer-events: auto;
       }
 

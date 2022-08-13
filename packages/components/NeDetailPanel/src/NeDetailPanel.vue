@@ -1,6 +1,6 @@
 <template>
-  <div ref="detailPanel" class="detail-panel-container">
-    <div class="detail-panel-element top" :style="`--height:${preConf.top}px`">
+  <div ref="detailPanel" class="detail-panel-container" :style="`--height:${preConf.top}px`">
+    <div class="detail-panel-element top">
       <div class="title-bar">计算结果</div>
       <div class="contains-bar">
         <slot name="value"></slot>
@@ -45,6 +45,7 @@ export default defineComponent({
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 
   .detail-panel-element {
     display: flex;
@@ -56,7 +57,7 @@ export default defineComponent({
     }
 
     &.bottom {
-      height: 100%;
+      height: calc(100% - var(--height) - 8px);
       margin-top: 6px;
     }
 
