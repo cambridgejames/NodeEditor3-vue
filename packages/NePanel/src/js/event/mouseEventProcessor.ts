@@ -1,5 +1,4 @@
 import { NePanelConf, PanelInfo } from "../interface/nePanelIntf";
-import { BaseFormatter } from "@/js/browserFormat/baseFormatter";
 import { getPanelInfoController } from "@/NePanel/src/js/controller/panelInfoController";
 import Format from "@/NePanel/src/js/format";
 
@@ -39,7 +38,7 @@ const onMouseScrollFunc = (event: WheelEvent, nePanelConf: NePanelConf): void =>
  * @param event 鼠标事件
  */
 const onMouseRightClick = (event: MouseEvent): void => {
-  console.log("onMouseRightClick", event); // TODO
+  console.log("onMouseRightClick", event); // TODO: 鼠标右键单击事件
 };
 
 /**
@@ -64,9 +63,8 @@ const onMouseRightDrag = (event: MouseEvent, starting: Point, nePanelConf: NePan
  * @param panelInfo 面板信息
  */
 const onMouseMoveFunc = (event: MouseEvent, nePanelConf: NePanelConf, panelInfo: PanelInfo): void => {
-  const realEvent = BaseFormatter.formatMouseEvent(event);
-  panelInfo.mouse.realX = Format.formatScale(nePanelConf.x + realEvent.offsetX, nePanelConf.scale);
-  panelInfo.mouse.realY = Format.formatScale(nePanelConf.y + realEvent.offsetY, nePanelConf.scale);
+  panelInfo.mouse.realX = Format.formatScale(nePanelConf.x + event.offsetX, nePanelConf.scale);
+  panelInfo.mouse.realY = Format.formatScale(nePanelConf.y + event.offsetY, nePanelConf.scale);
 };
 
 /*********************
@@ -97,7 +95,7 @@ export const getMouseEventProcessor = (nePanelConfigure: NePanelConfigure) => {
    * @param event
    */
   const onMouseLeftDown = (event: MouseEvent): void => {
-    console.log("onMouseLeftDown", event); // TODO
+    console.log("onMouseLeftDown", event); // TODO: 鼠标左键事件
   };
 
   /**

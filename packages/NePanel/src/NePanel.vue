@@ -2,7 +2,9 @@
   <ne-split-panel :left="150" :right="300">
     <template #left>
       <div class="node-list-container">
-        <ne-list-node v-for="(item, index) in componentList" :key="index" :node="item.configure"></ne-list-node>
+        <ne-list-node v-for="(item, index) in componentList" :key="index" :node="item.configure" draggable="true"
+                      @dragstart="event => DragEventProcessor.onDragStart(event, item.configure)"
+                      @dragend.prevent="DragEventProcessor.onDragEnd"/>
       </div>
     </template>
     <template #center>
@@ -47,6 +49,8 @@
           <p>指针坐标：({{ panelInfo.mouse.realX.toFixed(1) }}, {{ panelInfo.mouse.realY.toFixed(1) }})</p>
           <p>画布大小：{{ formatScale(nePanelConf.width).toFixed(0) }} * {{ formatScale(nePanelConf.height).toFixed(0) }}</p>
         </div>
+        <div :class="{'drag-info-panel':true, 'show':nodeDrag.dragging}" :style="`--dragInfo:'${nodeDrag.dragInfo}'`"
+             @dragover.prevent @drop="DragEventProcessor.onDrop"></div>
       </div>
     </template>
     <template #right>

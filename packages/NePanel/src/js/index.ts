@@ -17,6 +17,7 @@ import NeDetailPanel from "@/components/NeDetailPanel";
 import COMPONENT_MAP, { componentList } from "@/nodes";
 import { NePanelConfigure } from "@/js/interface/NePanelConfigure";
 import { getSubEventProcessor } from "@/NePanel/src/js/event/subEventProcessor";
+import { getDragEventProcessor } from "@/NePanel/src/js/event/dragEventProcessor";
 
 export default defineComponent({
   name: "ne-panel",
@@ -81,7 +82,11 @@ export default defineComponent({
         realY: 0
       }
     });
-    const components = ref<NePanelInitIntf[]>(propsData.init);
+    const nodeDrag = ref({
+      dragging: false,
+      dragInfo: "拖动到此处以添加节点"
+    });
+    const components = ref<NePanelInitIntf[]>([...propsData.init]);
     const rightContent = ref({
       solutionValue: ""
     });
@@ -158,7 +163,7 @@ export default defineComponent({
         endValue: nePanelConf.value.width / -2,
         startTime: timeNow,
         speed: SCALE_ANIMATE_SPEED,
-        type: AnimateType.EASY_OUT,
+        type: AnimateType.EASY_IN_EASY_OUT,
         onValueChange: (value) => { nePanelConf.value.x = value; },
         callback: null
       } as AnimateElement);
@@ -168,7 +173,7 @@ export default defineComponent({
         endValue: nePanelConf.value.height / -2,
         startTime: timeNow,
         speed: SCALE_ANIMATE_SPEED,
-        type: AnimateType.EASY_OUT,
+        type: AnimateType.EASY_IN_EASY_OUT,
         onValueChange: (value) => { nePanelConf.value.y = value; },
         callback: null
       } as AnimateElement);
@@ -204,11 +209,13 @@ export default defineComponent({
     const PanelInfoController = getPanelInfoController(panelInfo);
     const MouseEventProcessor = getMouseEventProcessor(configureParam);
     const SubEventProcessor = getSubEventProcessor(rightContent, rightElement);
+    const DragEventProcessor = getDragEventProcessor(nodeDrag, components, configureParam);
 
     return {
       nePanel,
       nePanelConf,
       panelInfo,
+      nodeDrag,
       components,
       rightContent,
       rightElement,
@@ -219,7 +226,8 @@ export default defineComponent({
       resetScale,
       formatScale,
       MouseEventProcessor,
-      SubEventProcessor
+      SubEventProcessor,
+      DragEventProcessor
     };
   }
 });

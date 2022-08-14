@@ -64,3 +64,32 @@
     opacity: 1;
   }
 }
+
+.drag-info-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.2;
+  display: none;
+  background-color: $drag-info-panel-color;
+  text-align: center;
+
+  &:after {
+    width: 100%;
+    height: min-content;
+    display: block;
+    vertical-align: middle;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-size: 50px;
+    content: var(--dragInfo);
+  }
+
+  &[class*=show] {
+    display: block;
+  }
+}
