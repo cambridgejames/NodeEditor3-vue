@@ -1,6 +1,7 @@
-import { NeInputPanelIntf } from "@/nodes/input/NeInputNode/src/js/interface/neInputPanelIntf";
+import { NeInputPanelIntf } from "../interface/neInputPanelIntf";
 import { Ref, SetupContext } from "vue";
 import { Point } from "@/js/interface/2d/Point";
+import Format from "@/NePanel/src/js/format";
 
 /**
  * 根据节点获取整个面板
@@ -16,30 +17,7 @@ const getPanelElement = (nodeElement: HTMLElement | undefined): HTMLElement | un
 };
 
 export const getMouseEventProcessor = (nodePanel: Ref<HTMLElement | undefined>, nodePanelConf: Ref<NeInputPanelIntf>,
-  context: SetupContext) => {
-  /**
-   * 左键点击事件响应方法
-   *
-   * @param event 鼠标事件
-   */
-  const onLeftDown = (event: MouseEvent): void => {
-    const nodeElement = nodePanel.value;
-    const starting: Point = {
-      x: event.clientX,
-      y: event.clientY
-    };
-    const mouseUpFunc = (subEvent: Event): void => {
-      if (subEvent instanceof MouseEvent) {
-        const mouseEvent = subEvent as MouseEvent;
-        if (mouseEvent.clientX === starting.x && mouseEvent.clientY === starting.y) {
-          context.emit("neleftlick", event);
-        }
-      }
-      nodeElement?.removeEventListener("mouseup", mouseUpFunc);
-    };
-    nodeElement?.addEventListener("mouseup", mouseUpFunc);
-  };
-
+  panelConf: Ref, context: SetupContext) => {
   /**
    * 右键点击事件响应方法
    *
@@ -55,7 +33,7 @@ export const getMouseEventProcessor = (nodePanel: Ref<HTMLElement | undefined>, 
       if (subEvent instanceof MouseEvent) {
         const mouseEvent = subEvent as MouseEvent;
         if (mouseEvent.clientX === starting.x && mouseEvent.clientY === starting.y) {
-          context.emit("nerightclick", event);
+          context.emit("neRightClick", event);
         }
       }
       nodeElement?.removeEventListener("mouseup", mouseUpFunc);
@@ -74,19 +52,24 @@ export const getMouseEventProcessor = (nodePanel: Ref<HTMLElement | undefined>, 
       x: event.clientX,
       y: event.clientY
     };
+    const startingElse = { ...starting };
     const moveFunc = (event: Event): void => {
       if (event instanceof MouseEvent) {
         const mouseEvent = event as MouseEvent;
-        nodePanelConf.value.x += mouseEvent.clientX - starting.x;
-        nodePanelConf.value.y += mouseEvent.clientY - starting.y;
-        starting.x = mouseEvent.clientX;
-        starting.y = mouseEvent.clientY;
+        nodePanelConf.value.x += Format.formatScale(mouseEvent.clientX - startingElse.x, panelConf.value.scale);
+        nodePanelConf.value.y += Format.formatScale(mouseEvent.clientY - startingElse.y, panelConf.value.scale);
+        startingElse.x = mouseEvent.clientX;
+        startingElse.y = mouseEvent.clientY;
       }
     };
-    const mouseUpFunc = (event: Event): void => {
-      if (event instanceof MouseEvent) {
+    const mouseUpFunc = (subEvent: Event): void => {
+      if (subEvent instanceof MouseEvent) {
         panelElement?.removeEventListener("mousemove", moveFunc);
         panelElement?.removeEventListener("mouseup", mouseUpFunc);
+        const mouseEvent = subEvent as MouseEvent;
+        if (mouseEvent.clientX === starting.x && mouseEvent.clientY === starting.y) {
+          context.emit("neLeftClick", mouseEvent);
+        }
       }
     };
     panelElement?.addEventListener("mousemove", moveFunc);
@@ -108,11 +91,11 @@ export const getMouseEventProcessor = (nodePanel: Ref<HTMLElement | undefined>, 
       if (event instanceof MouseEvent) {
         const mouseEvent = event as MouseEvent;
         if (nodePanelConf.value.width + mouseEvent.clientX - starting.x >= nodePanelConf.value.minWidth) {
-          nodePanelConf.value.width += mouseEvent.clientX - starting.x;
+          nodePanelConf.value.width += Format.formatScale(mouseEvent.clientX - starting.x, panelConf.value.scale);
           starting.x = mouseEvent.clientX;
         }
         if (nodePanelConf.value.height + mouseEvent.clientY - starting.y >= nodePanelConf.value.minHeight) {
-          nodePanelConf.value.height += mouseEvent.clientY - starting.y;
+          nodePanelConf.value.height += Format.formatScale(mouseEvent.clientY - starting.y, panelConf.value.scale);
           starting.y = mouseEvent.clientY;
         }
       }
@@ -128,7 +111,6 @@ export const getMouseEventProcessor = (nodePanel: Ref<HTMLElement | undefined>, 
   };
 
   return {
-    onLeftDown,
     onRightDown,
     onMoveNodeDown,
     onResizeDown

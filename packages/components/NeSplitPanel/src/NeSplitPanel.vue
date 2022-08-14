@@ -4,10 +4,10 @@
        @hideleft.stop.prevent
        @showright.stop.prevent
        @hideright.stop.prevent>
-    <div class="split-panel-slot left" :style="`--left:${preConf.left}px`">
+    <div ref="leftPanel" class="split-panel-slot left" :style="`--left:${preConf.left}px`">
       <slot name="left"></slot>
     </div>
-    <div class="split-panel-slot center" :style="`--center:${preConf.center}px`">
+    <div ref="centerPanel" class="split-panel-slot center" :style="`--center:${preConf.center}px`">
       <slot name="center"></slot>
     </div>
     <div ref="rightPanel" class="split-panel-slot right" :style="`--right:${preConf.right}px`"
@@ -44,12 +44,14 @@ export default defineComponent({
   },
   setup(propsData) {
     const neSplitPanel = ref<HTMLElement>();
+    const leftPanel = ref<HTMLElement>();
     const rightPanel = ref<HTMLElement>();
     const preConfParam = { ...propsData };
     const preConf = ref(preConfParam);
-    const MouseEventProcessor = getMouseEventProcessor(preConf, neSplitPanel, rightPanel);
+    const MouseEventProcessor = getMouseEventProcessor(preConf, neSplitPanel, leftPanel, rightPanel);
     return {
       neSplitPanel,
+      leftPanel,
       rightPanel,
       preConf,
       MouseEventProcessor
@@ -84,7 +86,6 @@ export default defineComponent({
 
     &.right {
       width: var(--right);
-      max-width: 1200px;
       min-width: 50px;
       flex-shrink: 0;
       display: flex;
@@ -92,9 +93,10 @@ export default defineComponent({
       overflow: hidden;
       background-color: $node-background-color;
       pointer-events: none;
+      padding: 6px 0;
 
       &:before {
-        width: 10px;
+        width: 6px;
         flex-shrink: 0;
         content: "";
         cursor: ew-resize;
@@ -104,9 +106,17 @@ export default defineComponent({
       .right-box {
         display: block;
         width: 100%;
-        height: 100%;
-        overflow: hidden auto;
+        height: calc(100% - 12px);
+        overflow: hidden;
         pointer-events: auto;
+      }
+
+      &:after {
+        width: 6px;
+        flex-shrink: 0;
+        content: "";
+        cursor: ew-resize;
+        pointer-events: none;
       }
     }
   }

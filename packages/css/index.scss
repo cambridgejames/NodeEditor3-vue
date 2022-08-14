@@ -3,6 +3,9 @@ $selection-box-color: #ff4f81;
 $selected-node-border: #ffaa18;
 
 $node-background-color: #eee;
+$detail-title-background-color: #003366;
+
+$drag-info-panel-color: #ffaa18;
 
 $node-title-input: #bd2e2e;
 
@@ -13,12 +16,14 @@ $tips-background: rgba(0, 0, 0, 0.3);
   padding: 0;
 }
 
-.ne-node {
+.none-selective {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
 
+.ne-node {
   .background {
     width: calc(1px + var(--width));
     height: calc(1px + var(--height));

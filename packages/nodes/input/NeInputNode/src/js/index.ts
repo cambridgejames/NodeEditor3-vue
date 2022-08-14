@@ -1,12 +1,12 @@
 import { defineComponent, ref, SetupContext } from "vue";
-import NeCompSvg from "@/components/NeCompSvg";
 import { NeInputPanelIntf } from "@/nodes/input/NeInputNode/src/js/interface/neInputPanelIntf";
-import { getMouseEventProcessor } from "@/nodes/input/NeInputNode/src/js/event/mouseEventProcessor";
+import NeBaseNode from "@/nodes/base/NeBaseNode";
+import Configure from "../configure";
 
 export default defineComponent({
-  name: "NeInputNode",
+  name: Configure.name,
   components: {
-    NeCompSvg
+    NeBaseNode
   },
   props: {
     x: {
@@ -20,28 +20,31 @@ export default defineComponent({
       required: true
     }
   },
+  emits: {
+    neLeftClick: null,
+    neRightClick: null
+  },
   setup(propsData, context: SetupContext) {
     const nodePanel = ref<HTMLElement>();
     const nodePanelConf = ref({
       x: propsData.x,
       y: propsData.y,
-      width: 120,
-      height: 40,
-      minWidth: 120,
-      minHeight: 40,
-      title: "输入"
+      title: Configure.title,
+      color: Configure.color
     } as NeInputPanelIntf);
 
-    /************************
-     *  Imported Functions  *
-     ************************/
-
-    const MouseEventProcessor = getMouseEventProcessor(nodePanel, nodePanelConf, context);
+    const onNeLeftClick = (event: MouseEvent): void => {
+      context.emit("neLeftClick", event);
+    };
+    const onNeRightClick = (event: MouseEvent): void => {
+      context.emit("neRightClick", event);
+    };
 
     return {
       nodePanel,
       nodePanelConf,
-      MouseEventProcessor
+      onNeLeftClick,
+      onNeRightClick
     };
   }
 });

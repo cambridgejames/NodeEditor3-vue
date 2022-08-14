@@ -1,5 +1,12 @@
 <template>
-  <ne-split-panel :left="200" :right="400">
+  <ne-split-panel :left="150" :right="300">
+    <template #left>
+      <div class="node-list-container">
+        <ne-list-node v-for="(item, index) in componentList" :key="index" :node="item.configure" draggable="true"
+                      @dragstart="event => DragEventProcessor.onDragStart(event, item.configure)"
+                      @dragend.prevent="DragEventProcessor.onDragEnd"/>
+      </div>
+    </template>
     <template #center>
       <div ref="nePanel" class="ne-panel" v-resize="reCalcPanelSize">
         <svg ref="neSvgPanel" class="ne-svg-panel" :width="nePanelConf.width" :height="nePanelConf.height"
@@ -28,21 +35,33 @@
                   :stroke-width="formatScale(1)" class="coordinate-axis"/>
           </g>
           <g>
-            <component v-for="(item, index) in components" :key="index" :is="COMPONENTS.get(item.name)"
+            <component v-for="(item, index) in components" :key="index" :is="COMPONENT_MAP.get(item.name).node"
                        :class="{'selected':true}" :x="item.transform.x" :y="item.transform.y"
-                       @neleftclick.stop.prevent=""
-                       @nerightclick.stop.prevent=""/>
+                       @ne-left-click.stop.prevent="event => SubEventProcessor.onNeLeftClick(event, COMPONENT_MAP.get(item.name))"
+                       @ne-right-click.stop.prevent=""/>
           </g>
         </svg>
-        <div ref="ne-panel-reset" :class="{'ne-panel-reset':true, 'show':!isInitialState()}" @click="resetScale">
+        <div ref="ne-panel-reset" :class="{'ne-panel-reset':true, 'none-selective': true, 'show':!isInitialState()}" @click="resetScale">
           <ne-comp-svg type="reset" :width="20" :height="20"></ne-comp-svg>
         </div>
-        <div ref="ne-panel-info" :class="{'ne-panel-info':true, 'show':panelInfo.show}">
+        <div ref="ne-panel-info" :class="{'ne-panel-info':true, 'none-selective': true, 'show':panelInfo.show}">
           <p>缩放倍率：{{ Math.ceil(nePanelConf.scale * 100) }}%</p>
           <p>指针坐标：({{ panelInfo.mouse.realX.toFixed(1) }}, {{ panelInfo.mouse.realY.toFixed(1) }})</p>
           <p>画布大小：{{ formatScale(nePanelConf.width).toFixed(0) }} * {{ formatScale(nePanelConf.height).toFixed(0) }}</p>
         </div>
+        <div :class="{'drag-info-panel':true, 'show':nodeDrag.dragging}" :style="`--dragInfo:'${nodeDrag.dragInfo}'`"
+             @dragover.prevent @drop="DragEventProcessor.onDrop"></div>
       </div>
+    </template>
+    <template #right>
+      <ne-detail-panel>
+        <template #value>
+          {{ rightContent.solutionValue }}
+        </template>
+        <template #element>
+          <component :is="rightElement"/>
+        </template>
+      </ne-detail-panel>
     </template>
   </ne-split-panel>
 </template>

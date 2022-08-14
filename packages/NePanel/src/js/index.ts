@@ -7,19 +7,25 @@ import { getMouseEventProcessor } from "@/NePanel/src/js/event/mouseEventProcess
 import { getPanelInfoController } from "@/NePanel/src/js/controller/panelInfoController";
 import { NePanelInitIntf } from "@/js/interface/NePanelInitIntf";
 
-import { defineComponent, onMounted, PropType, ref } from "vue";
+import { Component, defineComponent, markRaw, onMounted, PropType, provide, ref } from "vue";
 
 import NeCompSvg from "@/components/NeCompSvg";
 import NeSplitPanel from "@/components/NeSplitPanel";
+import NeListNode from "@/components/NeListNode";
+import NeDetailPanel from "@/components/NeDetailPanel";
 
-import COMPONENTS from "@/nodes";
+import COMPONENT_MAP, { componentList } from "@/nodes";
 import { NePanelConfigure } from "@/js/interface/NePanelConfigure";
+import { getSubEventProcessor } from "@/NePanel/src/js/event/subEventProcessor";
+import { getDragEventProcessor } from "@/NePanel/src/js/event/dragEventProcessor";
 
 export default defineComponent({
   name: "ne-panel",
   components: {
-    NeCompSvg,
-    NeSplitPanel
+    NeCompSvg: markRaw(NeCompSvg),
+    NeSplitPanel: markRaw(NeSplitPanel),
+    NeListNode: NeListNode,
+    NeDetailPanel: markRaw(NeDetailPanel)
   },
   props: {
     init: {
@@ -76,8 +82,22 @@ export default defineComponent({
         realY: 0
       }
     });
-    const components = ref<NePanelInitIntf[]>(propsData.init);
+    const nodeDrag = ref({
+      dragging: false,
+      dragInfo: "拖动到此处以添加节点"
+    });
+    const components = ref<NePanelInitIntf[]>([...propsData.init]);
+    const rightContent = ref({
+      solutionValue: ""
+    });
+    const rightElement = ref<Component | undefined>(undefined);
     const SCALE_ANIMATE_SPEED = 300;
+
+    /********************
+     *  Provide Params  *
+     ********************/
+
+    provide("panelConf", nePanelConf);
 
     /*********************
      *  Local Functions  *
@@ -143,7 +163,7 @@ export default defineComponent({
         endValue: nePanelConf.value.width / -2,
         startTime: timeNow,
         speed: SCALE_ANIMATE_SPEED,
-        type: AnimateType.EASY_OUT,
+        type: AnimateType.EASY_IN_EASY_OUT,
         onValueChange: (value) => { nePanelConf.value.x = value; },
         callback: null
       } as AnimateElement);
@@ -153,7 +173,7 @@ export default defineComponent({
         endValue: nePanelConf.value.height / -2,
         startTime: timeNow,
         speed: SCALE_ANIMATE_SPEED,
-        type: AnimateType.EASY_OUT,
+        type: AnimateType.EASY_IN_EASY_OUT,
         onValueChange: (value) => { nePanelConf.value.y = value; },
         callback: null
       } as AnimateElement);
@@ -188,18 +208,26 @@ export default defineComponent({
 
     const PanelInfoController = getPanelInfoController(panelInfo);
     const MouseEventProcessor = getMouseEventProcessor(configureParam);
+    const SubEventProcessor = getSubEventProcessor(rightContent, rightElement);
+    const DragEventProcessor = getDragEventProcessor(nodeDrag, components, configureParam);
 
     return {
       nePanel,
       nePanelConf,
       panelInfo,
+      nodeDrag,
       components,
-      COMPONENTS,
+      rightContent,
+      rightElement,
+      componentList,
+      COMPONENT_MAP,
       isInitialState,
       reCalcPanelSize,
       resetScale,
       formatScale,
-      MouseEventProcessor
+      MouseEventProcessor,
+      SubEventProcessor,
+      DragEventProcessor
     };
   }
 });

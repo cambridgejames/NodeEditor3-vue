@@ -20,5 +20,6 @@ shims-vue.d.ts
 tsconfig.json
 tslint.json
 vue.config.js
+yarn.lock
 
 *.map
