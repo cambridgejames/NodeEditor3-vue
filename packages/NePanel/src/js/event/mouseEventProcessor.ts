@@ -4,6 +4,7 @@ import Format from "@/NePanel/src/js/format";
 
 import { NePanelConfigure } from "@/js/interface/NePanelConfigure";
 import { Point } from "@/js/interface/2d/Point";
+import { getNodeController } from "@/NePanel/src/js/controller/nodeController";
 
 const scaleConfigure = {
   minValue: 0.01,
@@ -30,6 +31,15 @@ const onMouseScrollFunc = (event: WheelEvent, nePanelConf: NePanelConf): void =>
   nePanelConf.scale = goalScale;
   // 重新计算Grid网格
   nePanelConf.gridDef = Format.formatGrid(nePanelConf.scale);
+};
+
+/**
+ * 鼠标左键拖拽事件响应方法
+ *
+ * @param event 鼠标事件
+ */
+const onMouseLeftDrag = (event: MouseEvent, starting: Point, nePanelConf: NePanelConf): void => {
+  console.log("onMouseLeftFrag", event); // TODO: 鼠标左键拖拽事件
 };
 
 /**
@@ -78,6 +88,7 @@ const onMouseMoveFunc = (event: MouseEvent, nePanelConf: NePanelConf, panelInfo:
  */
 export const getMouseEventProcessor = (nePanelConfigure: NePanelConfigure) => {
   const PanelInfoController = getPanelInfoController(nePanelConfigure.panelInfo);
+  const NodeController = getNodeController(nePanelConfigure);
 
   /**
    * 鼠标滚轮响应方法，对画布进行缩放
@@ -95,7 +106,30 @@ export const getMouseEventProcessor = (nePanelConfigure: NePanelConfigure) => {
    * @param event
    */
   const onMouseLeftDown = (event: MouseEvent): void => {
-    console.log("onMouseLeftDown", event); // TODO: 鼠标左键事件
+    const panelElement = nePanelConfigure.nePanel.value;
+    const starting: Point = {
+      x: event.clientX,
+      y: event.clientY
+    };
+    const startingElse = { ...starting };
+    const leftDragFunc = (event: Event): void => {
+      if (event instanceof MouseEvent) {
+        const mouseEvent = event as MouseEvent;
+        onMouseLeftDrag(mouseEvent, startingElse, nePanelConfigure.nePanelConf.value);
+      }
+    };
+    const mouseUpFunc = (event: Event): void => {
+      if (event instanceof MouseEvent) {
+        const mouseEvent = event as MouseEvent;
+        if (mouseEvent.clientX === starting.x && mouseEvent.clientY === starting.y) {
+          NodeController.resetSelectedStatus();
+        }
+      }
+      panelElement.removeEventListener("mousemove", leftDragFunc);
+      panelElement.removeEventListener("mouseup", mouseUpFunc);
+    };
+    panelElement.addEventListener("mousemove", leftDragFunc);
+    panelElement.addEventListener("mouseup", mouseUpFunc);
   };
 
   /**

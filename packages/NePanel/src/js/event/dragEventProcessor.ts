@@ -4,7 +4,7 @@ import { NePanelInitIntf } from "@/js/interface/NePanelInitIntf";
 import { NePanelConfigure } from "@/js/interface/NePanelConfigure";
 import { Point } from "@/js/interface/2d/Point";
 import Format from "@/NePanel/src/js/format";
-import { neNodeExportEx, NeNodeExportEx } from "@/NePanel/src/js/interface/NeNodeExportEx";
+import { neNodeExportEx } from "@/NePanel/src/js/interface/NeNodeExportEx";
 
 const CONFIGURE_KEY = "configure";
 const OFFSET_KEY = "offset";
@@ -23,7 +23,7 @@ const getOrDefault = (event: DragEvent, key: string, defaultValue: string): stri
   return value === undefined ? defaultValue : value;
 };
 
-export const getDragEventProcessor = (nodeDrag: Ref, components: Ref<NeNodeExportEx[]>, nePanelConfigure: NePanelConfigure) => {
+export const getDragEventProcessor = (nodeDrag: Ref, nePanelConfigure: NePanelConfigure) => {
   /**
    * 拖拽开始事件监听方法
    *
@@ -60,7 +60,7 @@ export const getDragEventProcessor = (nodeDrag: Ref, components: Ref<NeNodeExpor
     }
     const nePanelConf = nePanelConfigure.nePanelConf.value;
     const offset = JSON.parse(getOrDefault(event, OFFSET_KEY, DEFAULT_OFFSET)) as Point;
-    components.value.push(neNodeExportEx({
+    nePanelConfigure.componentList.value.push(neNodeExportEx({
       name: event.dataTransfer.getData(CONFIGURE_KEY),
       transform: {
         x: Format.formatScale(nePanelConf.x + event.offsetX - offset.x, nePanelConf.scale),

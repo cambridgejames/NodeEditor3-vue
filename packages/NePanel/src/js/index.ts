@@ -18,7 +18,7 @@ import { componentList } from "@/nodes";
 import { NePanelConfigure } from "@/js/interface/NePanelConfigure";
 import { getSubEventProcessor } from "@/NePanel/src/js/event/subEventProcessor";
 import { getDragEventProcessor } from "@/NePanel/src/js/event/dragEventProcessor";
-import { getNodeController } from "@/NePanel/src/js/controller/nodeController";
+import StaticNodeController from "@/NePanel/src/js/controller/nodeController";
 import { NeNodeExportEx } from "@/NePanel/src/js/interface/NeNodeExportEx";
 
 export default defineComponent({
@@ -91,6 +91,7 @@ export default defineComponent({
     const rightContent = ref({
       solutionValue: ""
     });
+    const components = ref<NeNodeExportEx[]>(StaticNodeController.initComponentList(propsData.init));
     const rightElement = ref<Component | undefined>(undefined);
     const SCALE_ANIMATE_SPEED = 300;
 
@@ -204,16 +205,15 @@ export default defineComponent({
     const configureParam = {
       nePanel: nePanel,
       nePanelConf: nePanelConf,
-      panelInfo: panelInfo
+      panelInfo: panelInfo,
+      componentList: components,
+      rightElement: rightElement
     } as NePanelConfigure;
-
-    const NodeController = getNodeController();
-    const components = ref<NeNodeExportEx[]>(NodeController.initComponentList(propsData.init));
 
     const PanelInfoController = getPanelInfoController(panelInfo);
     const MouseEventProcessor = getMouseEventProcessor(configureParam);
-    const SubEventProcessor = getSubEventProcessor(rightContent, rightElement);
-    const DragEventProcessor = getDragEventProcessor(nodeDrag, components, configureParam);
+    const SubEventProcessor = getSubEventProcessor(rightContent, configureParam);
+    const DragEventProcessor = getDragEventProcessor(nodeDrag, configureParam);
 
     return {
       nePanel,
