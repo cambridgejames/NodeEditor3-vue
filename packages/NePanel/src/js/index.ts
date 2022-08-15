@@ -14,10 +14,12 @@ import NeSplitPanel from "@/components/NeSplitPanel";
 import NeListNode from "@/components/NeListNode";
 import NeDetailPanel from "@/components/NeDetailPanel";
 
-import COMPONENT_MAP, { componentList } from "@/nodes";
+import { componentList } from "@/nodes";
 import { NePanelConfigure } from "@/js/interface/NePanelConfigure";
 import { getSubEventProcessor } from "@/NePanel/src/js/event/subEventProcessor";
 import { getDragEventProcessor } from "@/NePanel/src/js/event/dragEventProcessor";
+import { getNodeController } from "@/NePanel/src/js/controller/nodeController";
+import { NeNodeExportEx } from "@/NePanel/src/js/interface/NeNodeExportEx";
 
 export default defineComponent({
   name: "ne-panel",
@@ -86,7 +88,6 @@ export default defineComponent({
       dragging: false,
       dragInfo: "拖动到此处以添加节点"
     });
-    const components = ref<NePanelInitIntf[]>([...propsData.init]);
     const rightContent = ref({
       solutionValue: ""
     });
@@ -206,6 +207,9 @@ export default defineComponent({
       panelInfo: panelInfo
     } as NePanelConfigure;
 
+    const NodeController = getNodeController();
+    const components = ref<NeNodeExportEx[]>(NodeController.initComponentList(propsData.init));
+
     const PanelInfoController = getPanelInfoController(panelInfo);
     const MouseEventProcessor = getMouseEventProcessor(configureParam);
     const SubEventProcessor = getSubEventProcessor(rightContent, rightElement);
@@ -220,7 +224,6 @@ export default defineComponent({
       rightContent,
       rightElement,
       componentList,
-      COMPONENT_MAP,
       isInitialState,
       reCalcPanelSize,
       resetScale,

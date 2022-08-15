@@ -35,9 +35,9 @@
                   :stroke-width="formatScale(1)" class="coordinate-axis"/>
           </g>
           <g>
-            <component v-for="(item, index) in components" :key="index" :is="COMPONENT_MAP.get(item.name).node"
-                       :class="{'selected':true}" :x="item.transform.x" :y="item.transform.y"
-                       @ne-left-click.stop.prevent="event => SubEventProcessor.onNeLeftClick(event, COMPONENT_MAP.get(item.name))"
+            <component v-for="(item, index) in components" :key="index" :is="item.node"
+                       :class="{'selected':true}" :x="item.status.transform.x" :y="item.status.transform.y"
+                       @ne-left-click.stop.prevent="event => SubEventProcessor.onNeLeftClick(event, item)"
                        @ne-right-click.stop.prevent=""/>
           </g>
         </svg>

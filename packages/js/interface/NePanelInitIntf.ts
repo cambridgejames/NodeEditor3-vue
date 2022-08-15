@@ -1,12 +1,11 @@
 /**
  * NePanel配置入参
  */
+import { Point } from "@/js/interface/2d/Point";
+
 interface NePanelInitIntf {
   name: string,
-  transform: {
-    x: number,
-    y: number
-  }
+  transform: Point
 }
 const NePanelInit = (): NePanelInitIntf => {
   return {} as NePanelInitIntf;

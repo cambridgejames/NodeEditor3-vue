@@ -6,4 +6,5 @@ export interface NeInputPanelIntf {
   minWidth: number
   minHeight: number
   title: string
+  color: string
 }

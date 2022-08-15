@@ -70,7 +70,7 @@ $tips-background: rgba(0, 0, 0, 0.3);
     }
   }
 
-  &:hover {
+  &:hover, &.selected {
     .background {
       stroke: $selected-node-border;
     }

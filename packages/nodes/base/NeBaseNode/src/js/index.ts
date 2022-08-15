@@ -35,13 +35,14 @@ export default defineComponent({
     neRightClick: null
   },
   setup(propsData, context: SetupContext) {
+    const NODE_WIDTH_DEFAULT = 120;
     const nodePanel = ref<HTMLElement>();
     const nodePanelConf = ref({
       x: propsData.x,
       y: propsData.y,
-      width: 120,
+      width: NODE_WIDTH_DEFAULT,
       height: 40,
-      minWidth: 120,
+      minWidth: NODE_WIDTH_DEFAULT,
       minHeight: 40,
       title: propsData.title,
       color: propsData.color

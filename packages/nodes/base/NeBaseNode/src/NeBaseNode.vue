@@ -1,5 +1,5 @@
 <template>
-  <g ref="nodePanel" class="ne-node ne-text none-selective" :transform="`translate(${nodePanelConf.x},${nodePanelConf.y})`"
+  <g ref="nodePanel" class="ne-node none-selective" :transform="`translate(${nodePanelConf.x},${nodePanelConf.y})`"
      :style="`--width: ${nodePanelConf.width}px; --height: ${nodePanelConf.height}px; --color: ${nodePanelConf.color}`"
      @mousedown.left.stop.prevent>
     <rect class="background" :x="-0.5" :y="-0.5"></rect>
@@ -27,14 +27,9 @@ export default NeBaseNodeIndex;
 <style lang="scss" scoped>
 @import "../../../../css/index.scss";
 
-.ne-text {
-  width: 120px;
-  height: 240px;
-
-  .title-group {
-    .text-title-back {
-      fill: var(--color);
-    }
+.title-group {
+  .text-title-back {
+    fill: var(--color);
   }
 }
 </style>
