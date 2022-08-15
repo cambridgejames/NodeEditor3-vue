@@ -5,7 +5,8 @@ import COMPONENT_MAP from "@/nodes";
 
 export interface NeNodeExportEx extends NeNodeExport {
   status: {
-    selected: boolean,
+    id: number
+    selected: boolean
     transform: Point
   }
 }
@@ -16,8 +17,9 @@ export interface NeNodeExportEx extends NeNodeExport {
  * @param initConf 节点初始化对象
  */
 export const neNodeExportEx = (initConf: NePanelInitIntf): NeNodeExportEx => {
-  const solution = COMPONENT_MAP.get(initConf.name) as NeNodeExportEx;
+  const solution = { ...COMPONENT_MAP.get(initConf.name) } as NeNodeExportEx;
   solution.status = {
+    id: Math.random(),
     selected: false,
     transform: initConf.transform
   };

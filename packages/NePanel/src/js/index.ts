@@ -26,7 +26,7 @@ export default defineComponent({
   components: {
     NeCompSvg: markRaw(NeCompSvg),
     NeSplitPanel: markRaw(NeSplitPanel),
-    NeListNode: NeListNode,
+    NeListNode: markRaw(NeListNode),
     NeDetailPanel: markRaw(NeDetailPanel)
   },
   props: {

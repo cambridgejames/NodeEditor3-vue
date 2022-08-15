@@ -36,7 +36,7 @@
           </g>
           <g>
             <component v-for="(item, index) in components" :key="index" :is="item.node"
-                       :class="{'selected':true}" :x="item.status.transform.x" :y="item.status.transform.y"
+                       :class="{'selected':item.status.selected}" :x="item.status.transform.x" :y="item.status.transform.y"
                        @ne-left-click.stop.prevent="event => SubEventProcessor.onNeLeftClick(event, item)"
                        @ne-right-click.stop.prevent=""/>
           </g>
