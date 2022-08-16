@@ -3,15 +3,8 @@
  */
 import { Point } from "@/js/interface/2d/Point";
 
-interface NePanelInitIntf {
-  name: string,
+export interface NePanelInitIntf {
+  name: string
   transform: Point
+  data: string
 }
-const NePanelInit = (): NePanelInitIntf => {
-  return {} as NePanelInitIntf;
-};
-
-export {
-  NePanelInit,
-  NePanelInitIntf
-};
