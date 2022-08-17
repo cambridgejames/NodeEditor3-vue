@@ -9,13 +9,15 @@ const MOUSE_DRAG_MIN_Y = 5;
 /**
  * 判定鼠标拖拽的间隔时间最小值（单位：毫秒）
  */
-const MOUSE_DRAG_MIN_TIME = 150;
+const MOUSE_DRAG_MIN_TIME = 70;
 
 /**
  * 鼠标事件回调方法类型定义
  */
 export declare type EventCallbackIntf = (event: MouseEvent, startPoint: Point) => void;
 export declare type EventCallback = EventCallbackIntf | null;
+export declare type ConfigCallbackIntf = () => void;
+export declare type ConfigCallback = ConfigCallbackIntf | null;
 
 interface StartPointMessage extends Point {
   time: number
@@ -41,11 +43,16 @@ const isClickEvent = (currentEvent: MouseEvent, startPoint: StartPointMessage): 
  *
  * @param event 鼠标按下事件
  * @param element 响应事件的HTML元素
+ * @param onInit 鼠标按下事件初始化方法
  * @param onDrag 鼠标拖拽回调方法
  * @param onClick 鼠标点击回调方法
+ * @param onClear 鼠标按下事件清理方法
  */
 export const onMouseDown = (event: MouseEvent, element: HTMLElement,
-  onDrag: EventCallback, onClick: EventCallback): void => {
+  onInit: ConfigCallback, onDrag: EventCallback, onClick: EventCallback, onClear: ConfigCallback): void => {
+  if (onInit !== null) {
+    onInit();
+  }
   const lastDragEndPoint: Point = { x: event.clientX, y: event.clientY };
   const mouseDownPoint = { ...lastDragEndPoint } as StartPointMessage;
   mouseDownPoint.time = new Date().getTime();
@@ -72,16 +79,22 @@ export const onMouseDown = (event: MouseEvent, element: HTMLElement,
    * @param subEvent 鼠标抬起事件
    */
   const mouseUpFunc = (subEvent: Event): void => {
-    element.removeEventListener("mousemove", mouseDragFunc);
-    element.removeEventListener("mouseup", mouseUpFunc);
-    if (!(subEvent instanceof MouseEvent) || onClick === null) {
-      return;
+    try {
+      if (!(subEvent instanceof MouseEvent) || onClick === null) {
+        return;
+      }
+      const mouseEvent = subEvent as MouseEvent;
+      if (!isClickEvent(mouseEvent, mouseDownPoint)) {
+        return;
+      }
+      onClick(mouseEvent, mouseDownPoint);
+    } finally {
+      if (onClear !== null) {
+        onClear();
+      }
+      element.removeEventListener("mousemove", mouseDragFunc);
+      element.removeEventListener("mouseup", mouseUpFunc);
     }
-    const mouseEvent = subEvent as MouseEvent;
-    if (!isClickEvent(mouseEvent, mouseDownPoint)) {
-      return;
-    }
-    onClick(mouseEvent, mouseDownPoint);
   };
 
   element.addEventListener("mousemove", mouseDragFunc);
