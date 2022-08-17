@@ -5,6 +5,7 @@ import Format from "@/NePanel/src/js/format";
 import { NePanelConfigure } from "@/js/interface/NePanelConfigure";
 import { Point } from "@/js/interface/2d/Point";
 import { getNodeController } from "@/NePanel/src/js/controller/nodeController";
+import { ConfigCallback, EventCallback, onMouseDown } from "@/js/event/eventProcesssor";
 
 const scaleConfigure = {
   minValue: 0.01,
@@ -37,6 +38,8 @@ const onMouseScrollFunc = (event: WheelEvent, nePanelConf: NePanelConf): void =>
  * 鼠标左键拖拽事件响应方法
  *
  * @param event 鼠标事件
+ * @param starting 拖拽的起始坐标
+ * @param nePanelConf 面板属性
  */
 const onMouseLeftDrag = (event: MouseEvent, starting: Point, nePanelConf: NePanelConf): void => {
   console.log("onMouseLeftFrag", event); // TODO: 鼠标左键拖拽事件
@@ -106,30 +109,10 @@ export const getMouseEventProcessor = (nePanelConfigure: NePanelConfigure) => {
    * @param event
    */
   const onMouseLeftDown = (event: MouseEvent): void => {
-    const panelElement = nePanelConfigure.nePanel.value;
-    const starting: Point = {
-      x: event.clientX,
-      y: event.clientY
-    };
-    const startingElse = { ...starting };
-    const leftDragFunc = (event: Event): void => {
-      if (event instanceof MouseEvent) {
-        const mouseEvent = event as MouseEvent;
-        onMouseLeftDrag(mouseEvent, startingElse, nePanelConfigure.nePanelConf.value);
-      }
-    };
-    const mouseUpFunc = (event: Event): void => {
-      if (event instanceof MouseEvent) {
-        const mouseEvent = event as MouseEvent;
-        if (mouseEvent.clientX === starting.x && mouseEvent.clientY === starting.y) {
-          NodeController.resetSelectedStatus();
-        }
-      }
-      panelElement.removeEventListener("mousemove", leftDragFunc);
-      panelElement.removeEventListener("mouseup", mouseUpFunc);
-    };
-    panelElement.addEventListener("mousemove", leftDragFunc);
-    panelElement.addEventListener("mouseup", mouseUpFunc);
+    const onDragFunc: EventCallback = (event: MouseEvent, startPoint: Point): void =>
+      onMouseLeftDrag(event, startPoint, nePanelConfigure.nePanelConf.value);
+    const onClickFunc: EventCallback = (): void => NodeController.resetSelectedStatus();
+    onMouseDown(event, nePanelConfigure.nePanel.value, null, onDragFunc, onClickFunc, null);
   };
 
   /**
@@ -139,31 +122,15 @@ export const getMouseEventProcessor = (nePanelConfigure: NePanelConfigure) => {
    */
   const onMouseRightDown = (event: MouseEvent): void => {
     const panelElement = nePanelConfigure.nePanel.value;
-    const starting: Point = {
-      x: event.clientX,
-      y: event.clientY
+    const onDragFunc: EventCallback = (event: MouseEvent, startPoint: Point): void => {
+      panelElement.style.cursor = "grab";
+      onMouseRightDrag(event, startPoint, nePanelConfigure.nePanelConf.value);
     };
-    const startingElse = { ...starting };
-    const rightDragFunc = (event: Event): void => {
-      if (event instanceof MouseEvent) {
-        panelElement.style.cursor = "grab";
-        const mouseEvent = event as MouseEvent;
-        onMouseRightDrag(mouseEvent, startingElse, nePanelConfigure.nePanelConf.value);
-      }
+    const onClickFunc: EventCallback = (event: MouseEvent): void => onMouseRightClick(event);
+    const onClearFunc: ConfigCallback = (): void => {
+      panelElement.style.cursor = "inherit";
     };
-    const mouseUpFunc = (event: Event): void => {
-      if (event instanceof MouseEvent) {
-        panelElement.style.cursor = "inherit";
-        const mouseEvent = event as MouseEvent;
-        if (mouseEvent.clientX === starting.x && mouseEvent.clientY === starting.y) {
-          onMouseRightClick(event);
-        }
-      }
-      panelElement.removeEventListener("mousemove", rightDragFunc);
-      panelElement.removeEventListener("mouseup", mouseUpFunc);
-    };
-    panelElement.addEventListener("mousemove", rightDragFunc);
-    panelElement.addEventListener("mouseup", mouseUpFunc);
+    onMouseDown(event, panelElement, null, onDragFunc, onClickFunc, onClearFunc);
   };
 
   /**
