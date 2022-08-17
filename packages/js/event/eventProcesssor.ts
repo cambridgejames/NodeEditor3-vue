@@ -72,6 +72,8 @@ export const onMouseDown = (event: MouseEvent, element: HTMLElement,
    * @param subEvent 鼠标抬起事件
    */
   const mouseUpFunc = (subEvent: Event): void => {
+    element.removeEventListener("mousemove", mouseDragFunc);
+    element.removeEventListener("mouseup", mouseUpFunc);
     if (!(subEvent instanceof MouseEvent) || onClick === null) {
       return;
     }
@@ -80,8 +82,6 @@ export const onMouseDown = (event: MouseEvent, element: HTMLElement,
       return;
     }
     onClick(mouseEvent, mouseDownPoint);
-    element.removeEventListener("mousemove", mouseDragFunc);
-    element.removeEventListener("mouseup", mouseUpFunc);
   };
 
   element.addEventListener("mousemove", mouseDragFunc);
