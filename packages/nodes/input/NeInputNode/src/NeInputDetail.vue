@@ -1,27 +1,31 @@
 <template>
-  <div class="ne-detail">
-    <input />
-    <input />
-    <input />
-    <input />
-    <input />
-    <input />
-    <input />
-  </div>
+  <NeEditText :title="title" @value-change="onChangeFunc" />
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, SetupContext } from "vue";
+import NeEditText from "@/edit/NeEditText";
+import Configure from "./configure";
 
 export default defineComponent({
-  name: "NeInputDetail"
+  name: "NeInputDetail",
+  components: {
+    NeEditText
+  },
+  emits: {
+    valueChange: null
+  },
+  setup(propsData, context: SetupContext) {
+    const onChangeFunc = (...args: unknown[]): void => {
+      context.emit("valueChange", ...args);
+    };
+    return {
+      title: Configure.title,
+      onChangeFunc
+    };
+  }
 });
 </script>
 
 <style lang="scss" scoped>
-.ne-detail {
-  * {
-    display: block;
-  }
-}
 </style>

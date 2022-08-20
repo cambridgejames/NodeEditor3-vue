@@ -39,6 +39,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "../../../css/index.scss";
+@import "../../../css/edit.scss";
 
 .detail-panel-container {
   width: 100%;
@@ -70,6 +71,7 @@ export default defineComponent({
       line-height: 20px;
       overflow: hidden;
       background-color: $detail-title-background-color;
+      border-radius: $border-radius;
     }
 
     .contains-bar {

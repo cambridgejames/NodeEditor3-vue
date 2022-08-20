@@ -1,9 +1,11 @@
-$grid-stroke-color: #003366;
+$theme-color: #003366;
+
+$grid-stroke-color: $theme-color;
 $selection-box-color: #ff4f81;
 $selected-node-border: #ffaa18;
 
 $node-background-color: #eee;
-$detail-title-background-color: #003366;
+$detail-title-background-color: $theme-color;
 
 $drag-info-panel-color: #ffaa18;
 
@@ -74,5 +76,16 @@ $tips-background: rgba(0, 0, 0, 0.3);
     .background {
       stroke: $selected-node-border;
     }
+  }
+}
+
+.ne-edit {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 14px;
+
+  &:not(:first-child) {
+    margin-top: 6px;
   }
 }
