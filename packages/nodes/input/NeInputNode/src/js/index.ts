@@ -33,12 +33,8 @@ export default defineComponent({
       color: Configure.color
     } as NeInputPanelIntf);
 
-    const onNeLeftClick = (event: MouseEvent): void => {
-      context.emit("neLeftClick", event);
-    };
-    const onNeRightClick = (event: MouseEvent): void => {
-      context.emit("neRightClick", event);
-    };
+    const onNeLeftClick = (): void => context.emit("neLeftClick");
+    const onNeRightClick = (): void => context.emit("neRightClick");
 
     return {
       nodePanel,

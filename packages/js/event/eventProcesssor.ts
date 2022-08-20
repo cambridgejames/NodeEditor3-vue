@@ -48,8 +48,11 @@ const isClickEvent = (currentEvent: MouseEvent, startPoint: StartPointMessage): 
  * @param onClick 鼠标点击回调方法
  * @param onClear 鼠标按下事件清理方法
  */
-export const onMouseDown = (event: MouseEvent, element: HTMLElement,
+export const onMouseDown = (event: MouseEvent, element: HTMLElement | null | undefined,
   onInit: ConfigCallback, onDrag: EventCallback, onClick: EventCallback, onClear: ConfigCallback): void => {
+  if (element === null || element === undefined) {
+    return;
+  }
   if (onInit !== null) {
     onInit();
   }

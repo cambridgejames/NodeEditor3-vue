@@ -6,12 +6,9 @@ import { getNodeController } from "@/NePanel/src/js/controller/nodeController";
 
 export const getSubEventProcessor = (rightContent: Ref, nePanelConfigure: NePanelConfigure) => {
   const NodeController = getNodeController(nePanelConfigure);
-  const onNeLeftClick = (event: MouseEvent, item: NeNodeExportEx): void => {
+  const onNeLeftClick = (item: NeNodeExportEx): void => {
     NodeController.resetSelectedStatus();
-    const eventStr: Point = {
-      x: event.clientX,
-      y: event.clientY
-    };
+    const eventStr: Point = {} as Point;
     item.status.selected = true;
     rightContent.value.solutionValue = JSON.stringify(eventStr);
     nePanelConfigure.rightElement.value = item.detail;
