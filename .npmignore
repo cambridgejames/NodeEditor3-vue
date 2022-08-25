@@ -3,6 +3,7 @@
 .vscode
 examples/
 build/
+coverage/
 docs/
 imgs/
 node_modules/

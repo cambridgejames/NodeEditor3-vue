@@ -26,3 +26,6 @@ pnpm-debug.log*
 .cache
 .temp
 /site
+
+# Test coverage
+/tests/coverage
