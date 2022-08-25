@@ -9,8 +9,16 @@ export default defineComponent({
   name: "BasicUsage",
   components: {},
   setup() {
-    const initStr = "[{\"name\":\"NeInputNode\",\"transform\":{\"x\":100,\"y\":50}}]";
-    const init = ref(JSON.parse(initStr));
+    const init = ref([
+      {
+        nId: "f07edd03-6bc2-401d-bdae-4c08191a6873",
+        name: "NeInputNode",
+        transform: {
+          x: 100,
+          y: 50
+        }
+      }
+    ]);
     return {
       init
     };
