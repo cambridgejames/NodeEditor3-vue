@@ -8,6 +8,7 @@ imgs/
 node_modules/
 packages/
 public/
+tests/
 typings/
 
 # 忽略指定文件

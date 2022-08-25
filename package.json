@@ -3,46 +3,48 @@
   "version": "0.2.1",
   "private": false,
   "description": "基于 Vue.js 3.x 的前端可视化节点编辑器组件",
-  "main": "lib/index.cjs.js",
-  "module": "lib/index.esm.js",
-  "typings": "lib/index.d.ts",
-  "keywords": [
-    "node editor",
-    "editor"
-  ],
   "author": {
     "name": "Cambridge James",
     "email": "cambridge_james@foxmail.com"
   },
-  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "serve:doc": "vuepress dev docs --cache docs/.vuepress/.cache --temp docs/.vuepress/.temp",
     "build": "yarn clean && yarn build:lib && yarn build:esm-bundle && rimraf lib/demo.html",
-    "build:lib": "vue-cli-service build --target lib --name index --dest lib ./packages/index.ts",
-    "build:esm-bundle": "rollup --config ./build/rollup.config.js",
+    "test:unit": "vue-cli-service test:unit",
+    "test:coverage": "vue-cli-service test:unit --coverage",
     "build:docs": "vuepress build docs --dest site --cache docs/.vuepress/.cache --temp docs/.vuepress/.temp",
+    "build:esm-bundle": "rollup --config ./build/rollup.config.js",
+    "build:lib": "vue-cli-service build --target lib --name index --dest lib ./packages/index.ts",
     "clean": "rimraf lib",
-    "clean:docs": "rimraf docs/.vuepress/.cache && rimraf docs/.vuepress/.temp && rimraf site"
+    "clean:docs": "rimraf docs/.vuepress/.cache && rimraf docs/.vuepress/.temp && rimraf site",
+    "serve:doc": "vuepress dev docs --cache docs/.vuepress/.cache --temp docs/.vuepress/.temp"
   },
+  "main": "lib/index.cjs.js",
+  "module": "lib/index.esm.js",
   "dependencies": {
     "core-js": "^3.8.3",
     "vue": "^3.2.13"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.0.5",
+    "@types/jest": "^27.0.1",
     "@types/node": "^18.0.3",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-plugin-unit-jest": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "@vue/eslint-config-standard": "^6.1.0",
     "@vue/eslint-config-typescript": "^9.1.0",
+    "@vue/test-utils": "^2.0.0-0",
+    "@vue/vue3-jest": "^27.0.0-alpha.1",
+    "babel-jest": "^27.0.6",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-vue": "^8.0.1",
+    "jest": "^27.0.5",
     "rimraf": "^3.0.2",
     "rollup": "^2.76.0",
     "rollup-plugin-scss": "^3.0.0",
@@ -51,6 +53,7 @@
     "rollup-plugin-vue": "^6.0.0",
     "sass": "^1.32.7",
     "sass-loader": "^12.0.0",
+    "ts-jest": "^27.0.4",
     "typescript": "~4.5.5",
     "vuepress": "^2.0.0-beta.49"
   },
@@ -59,5 +62,11 @@
     "last 2 versions",
     "not dead",
     "not ie 11"
-  ]
+  ],
+  "keywords": [
+    "node editor",
+    "editor"
+  ],
+  "license": "MIT",
+  "typings": "lib/index.d.ts"
 }

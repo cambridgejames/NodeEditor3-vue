@@ -20,6 +20,10 @@ const replace = (inputChar: string): string => {
  *
  * @return UUID4
  */
-export const create = (): string => {
+const create = (): string => {
   return DEFAULT_VALUE.replace(SEARCH_REG, replace);
+};
+
+export default {
+  create
 };
