@@ -5,7 +5,7 @@ import COMPONENT_MAP from "@/nodes";
 import { NeData } from "@/js/interface/node/NeData";
 
 export interface NeNodeExportStatus {
-  id: number
+  id: string
   selected: boolean
   transform: Point
 }
@@ -28,7 +28,7 @@ export interface NeNodeExportEx extends NeNodeExport {
 export const neNodeExportEx = (initConf: NePanelInitIntf): NeNodeExportEx => {
   const solution = { ...COMPONENT_MAP.get(initConf.name) } as NeNodeExportEx;
   solution.status = {
-    id: Math.random(),
+    id: initConf.nid,
     selected: false,
     transform: initConf.transform
   } as NeNodeExportStatus;

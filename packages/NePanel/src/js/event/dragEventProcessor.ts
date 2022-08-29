@@ -5,6 +5,7 @@ import { NePanelConfigure } from "@/js/interface/NePanelConfigure";
 import { Point } from "@/js/interface/2d/Point";
 import Format from "@/NePanel/src/js/format";
 import { neNodeExportEx } from "@/NePanel/src/js/interface/NeNodeExportEx";
+import Uuid4 from "@/js/uuid/uuid4";
 
 const CONFIGURE_KEY = "configure";
 const OFFSET_KEY = "offset";
@@ -61,6 +62,7 @@ export const getDragEventProcessor = (nodeDrag: Ref, nePanelConfigure: NePanelCo
     const nePanelConf = nePanelConfigure.nePanelConf.value;
     const offset = JSON.parse(getOrDefault(event, OFFSET_KEY, DEFAULT_OFFSET)) as Point;
     nePanelConfigure.componentList.value.push(neNodeExportEx({
+      nid: Uuid4.create(),
       name: event.dataTransfer.getData(CONFIGURE_KEY),
       transform: {
         x: Format.formatScale(nePanelConf.x + event.offsetX - offset.x, nePanelConf.scale),
