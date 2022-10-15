@@ -25,11 +25,10 @@ export const getMouseEventProcessor = (nodePanel: Ref<HTMLElement | undefined>, 
    * @param event 鼠标事件
    */
   const onRightDown = (event: MouseEvent): void => {
-    const nodeElement = nodePanel.value;
     const onClickFunc: EventCallback = (): void => {
       context.emit("neRightClick");
     };
-    onMouseDown(event, nodeElement, null, null, onClickFunc, null);
+    onMouseDown(event, null, null, onClickFunc, null);
   };
 
   /**
@@ -38,7 +37,6 @@ export const getMouseEventProcessor = (nodePanel: Ref<HTMLElement | undefined>, 
    * @param event 鼠标事件
    */
   const onMoveNodeDown = (event: MouseEvent): void => {
-    const panelElement = getPanelElement(nodePanel.value);
     const onDragFunc: EventCallback = (event: MouseEvent, startPoint: Point): void => {
       nodePanelConf.value.x += Format.formatScale(event.clientX - startPoint.x, panelConf.value.scale);
       nodePanelConf.value.y += Format.formatScale(event.clientY - startPoint.y, panelConf.value.scale);
@@ -48,7 +46,7 @@ export const getMouseEventProcessor = (nodePanel: Ref<HTMLElement | undefined>, 
     const onClickFunc: EventCallback = (): void => {
       context.emit("neLeftClick");
     };
-    onMouseDown(event, panelElement, null, onDragFunc, onClickFunc, null);
+    onMouseDown(event, null, onDragFunc, onClickFunc, null);
   };
 
   /**

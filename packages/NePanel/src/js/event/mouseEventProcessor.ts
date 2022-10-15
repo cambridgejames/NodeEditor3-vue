@@ -112,7 +112,7 @@ export const getMouseEventProcessor = (nePanelConfigure: NePanelConfigure) => {
     const onDragFunc: EventCallback = (event: MouseEvent, startPoint: Point): void =>
       onMouseLeftDrag(event, startPoint, nePanelConfigure.nePanelConf.value);
     const onClickFunc: EventCallback = (): void => NodeController.resetSelectedStatus();
-    onMouseDown(event, nePanelConfigure.nePanel.value, null, onDragFunc, onClickFunc, null);
+    onMouseDown(event, null, onDragFunc, onClickFunc, null);
   };
 
   /**
@@ -130,7 +130,7 @@ export const getMouseEventProcessor = (nePanelConfigure: NePanelConfigure) => {
     const onClearFunc: ConfigCallback = (): void => {
       panelElement.style.cursor = "inherit";
     };
-    onMouseDown(event, panelElement, null, onDragFunc, onClickFunc, onClearFunc);
+    onMouseDown(event, null, onDragFunc, onClickFunc, onClearFunc);
   };
 
   /**

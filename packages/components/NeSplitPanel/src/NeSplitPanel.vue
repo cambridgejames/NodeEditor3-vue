@@ -48,7 +48,7 @@ export default defineComponent({
     const rightPanel = ref<HTMLElement>();
     const preConfParam = { ...propsData };
     const preConf = ref(preConfParam);
-    const MouseEventProcessor = getMouseEventProcessor(preConf, neSplitPanel, leftPanel, rightPanel);
+    const MouseEventProcessor = getMouseEventProcessor(preConf, neSplitPanel, leftPanel);
     return {
       neSplitPanel,
       leftPanel,

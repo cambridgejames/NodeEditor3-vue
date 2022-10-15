@@ -42,17 +42,13 @@ const isClickEvent = (currentEvent: MouseEvent, startPoint: StartPointMessage): 
  * 鼠标按下事件监听方法
  *
  * @param event 鼠标按下事件
- * @param element 响应事件的HTML元素
  * @param onInit 鼠标按下事件初始化方法
  * @param onDrag 鼠标拖拽回调方法
  * @param onClick 鼠标点击回调方法
  * @param onClear 鼠标按下事件清理方法
  */
-export const onMouseDown = (event: MouseEvent, element: HTMLElement | null | undefined,
-  onInit: ConfigCallback, onDrag: EventCallback, onClick: EventCallback, onClear: ConfigCallback): void => {
-  if (element === null || element === undefined) {
-    return;
-  }
+export const onMouseDown = (event: MouseEvent, onInit: ConfigCallback, onDrag: EventCallback, onClick: EventCallback,
+  onClear: ConfigCallback): void => {
   if (onInit !== null) {
     onInit();
   }
@@ -95,11 +91,11 @@ export const onMouseDown = (event: MouseEvent, element: HTMLElement | null | und
       if (onClear !== null) {
         onClear();
       }
-      element.removeEventListener("mousemove", mouseDragFunc);
-      element.removeEventListener("mouseup", mouseUpFunc);
+      window.removeEventListener("mousemove", mouseDragFunc);
+      window.removeEventListener("mouseup", mouseUpFunc);
     }
   };
 
-  element.addEventListener("mousemove", mouseDragFunc);
-  element.addEventListener("mouseup", mouseUpFunc);
+  window.addEventListener("mousemove", mouseDragFunc);
+  window.addEventListener("mouseup", mouseUpFunc);
 };

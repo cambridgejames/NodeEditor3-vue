@@ -22,7 +22,6 @@
   "main": "lib/index.cjs.js",
   "module": "lib/index.esm.js",
   "dependencies": {
-    "core-js": "^3.8.3",
     "vue": "^3.2.13"
   },
   "devDependencies": {
@@ -39,6 +38,7 @@
     "@vue/test-utils": "^2.0.0-0",
     "@vue/vue3-jest": "^27.0.0-alpha.1",
     "babel-jest": "^27.0.6",
+    "core-js": "^3.8.3",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-node": "^11.1.0",
